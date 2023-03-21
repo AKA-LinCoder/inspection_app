@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -10,10 +11,12 @@ import 'common/store/store.dart';
 import 'common/themes/themes.dart';
 import 'global.dart';
 
+
 final GlobalKey<NavigatorState> appKey = GlobalKey<NavigatorState>();
 
 void main() async{
   await Global.init();
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(const MyApp());
 }
 
