@@ -85,10 +85,10 @@ packages:
     dependency: "direct main"
     description:
       name: echo_utils
-      sha256: "057fdd4cc530c3b056d65af990b9e7d661882be76713c4a2054f20cc279bff06"
+      sha256: e5040bc1fefd402407dd8c45324562bafa082da73f1a3d3b713d89fa4b8a53d0
       url: "https://pub.dev"
     source: hosted
-    version: "0.0.5"
+    version: "0.0.8"
   fake_async:
     dependency: transitive
     description:

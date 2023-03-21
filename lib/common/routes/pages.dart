@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../pages/application/index.dart';
+import '../../pages/my/index.dart';
 import '../../pages/sign_in/index.dart';
 import '../../pages/welcome/index.dart';
 import '../middlewares/router_welcome.dart';
@@ -36,21 +38,19 @@ class AppPages {
       page: () => const SignInPage(),
       binding: SignInBinding(),
     ),
-    // ///主页
-    // GetPage(
-    //   name: AppRoutes.Application,
-    //   page: () => ApplicationPage(),
-    //   binding: ApplicationBinding(),
-    //   middlewares: [
-    //     RouteAuthMiddleware(priority: 1),
-    //   ],
-    // ),
-    // ///个人中心页面
-    // GetPage(
-    //   name: AppRoutes.My,
-    //   page: () => const MyPage(),
-    //   binding: MyBinding(),
-    // ),
+    ///主页
+    GetPage(
+      name: AppRoutes.Application,
+      page: () => const ApplicationPage(),
+      binding: ApplicationBinding(),
+
+    ),
+    ///个人中心页面
+    GetPage(
+      name: AppRoutes.My,
+      page: () => const MyPage(),
+      binding: MyBinding(),
+    ),
 
   ];
 

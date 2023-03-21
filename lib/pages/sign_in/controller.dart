@@ -27,13 +27,9 @@ class SignInController extends GetxController {
   // 密码的控制器
   final TextEditingController passController = TextEditingController();
 
-  // 密码的控制器
-  final TextEditingController newPassController = TextEditingController();
-
-  // 密码的控制器
-  final TextEditingController againPassController = TextEditingController();
   // final MyRepository repository;
   // SignInController({@required this.repository}) : assert(repository != null);
+  bool passwordVisible = false; //设置初始状态
 
 
   @override
@@ -55,6 +51,13 @@ class SignInController extends GetxController {
 
 
     super.onInit();
+
+    try{
+      throw "异常";
+    }catch(error,stack){
+      echoLog("自己补货的异常");
+
+    }
 
   }
 

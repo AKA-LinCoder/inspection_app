@@ -24,6 +24,8 @@ class UserStore extends GetxController {
   void onInit() {
     super.onInit();
     token = StorageService.to.getString(STORAGE_USER_TOKEN_KEY);
+    ///跳过登陆
+    _isLogin.value = true;
 
   }
 

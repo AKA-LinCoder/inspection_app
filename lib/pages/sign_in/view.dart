@@ -62,22 +62,22 @@ class _SignInPageState extends State<SignInPage> with WidgetsBindingObserver {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: Colors.white,
-      body:  SafeArea(
+      body: SafeArea(
         child: Padding(
-          padding:  EdgeInsets.all(16.r),
+          padding: EdgeInsets.all(16.r),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
                 padding: const EdgeInsets.all(8),
-                color: AppColors.primary,
+                // color: AppColors.primary,
                 width: double.infinity,
                 height: 180.h,
+                child: Image.asset("assets/login.png"),
               ),
               SizedBox(
                 height: 20.h,
               ),
-
               Text(
                 "Login".tr,
                 style: Styles.headLineStyle,
@@ -85,7 +85,8 @@ class _SignInPageState extends State<SignInPage> with WidgetsBindingObserver {
               SizedBox(
                 height: 30.h,
               ),
-               TextField(
+              TextField(
+                controller: controller.accountController,
                 decoration: InputDecoration(
                   ///默认边框
                   enabledBorder: UnderlineInputBorder(
@@ -110,8 +111,9 @@ class _SignInPageState extends State<SignInPage> with WidgetsBindingObserver {
               SizedBox(
                 height: 10.h,
               ),
-               TextField(
-                obscureText: true,
+              TextField(
+                controller: controller.passController,
+                obscureText: !controller.passwordVisible,
                 decoration: InputDecoration(
                   ///默认边框
                   enabledBorder: UnderlineInputBorder(
@@ -130,10 +132,18 @@ class _SignInPageState extends State<SignInPage> with WidgetsBindingObserver {
                     Icons.lock_outline,
                     color: Colors.grey,
                   ),
-                  suffixIcon: const Icon(
-                    Icons.remove_red_eye_outlined,
-                    color: Colors.grey,
-                  ),
+                  suffixIcon: IconButton(
+                      onPressed: () {
+                        controller.passwordVisible =
+                            !controller.passwordVisible;
+                        setState(() {});
+                      },
+                      icon: Icon(
+                        controller.passwordVisible
+                            ? Icons.visibility_outlined
+                            : Icons.visibility_off_outlined,
+                        color: Colors.grey,
+                      )),
                 ),
               ),
               SizedBox(
@@ -142,22 +152,40 @@ class _SignInPageState extends State<SignInPage> with WidgetsBindingObserver {
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-
-                  Text('${"forgetPassword".tr}?',style: Styles.headLineStyle4.copyWith(color:AppColors.primary),),
+                  Text(
+                    '${"forgetPassword".tr}?',
+                    style: Styles.headLineStyle4
+                        .copyWith(color: AppColors.primary),
+                  ),
                 ],
               ),
               SizedBox(
                 height: 30.h,
               ),
-
-              EchoButton(buttonName: "Login".tr, onPressed: (){},height: 40.h,buttonColor:  AppColors.primary,buttonTextStyle: Styles.headLineStyle3.copyWith(color: Colors.white),),
+              EchoButton(
+                buttonName: "Login".tr,
+                onPressed: () {},
+                height: 40.h,
+                buttonColor: AppColors.primary,
+                buttonTextStyle:
+                    Styles.headLineStyle3.copyWith(color: Colors.white),
+              ),
               Expanded(child: Container()),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text('${"toRegister".tr}?',style: Styles.headLineStyle4.copyWith(color: Colors.grey),),
-                  SizedBox(width: 5.w,),
-                  Text("Register".tr,style: Styles.headLineStyle4.copyWith(color: AppColors.primary),),
+                  Text(
+                    '${"toRegister".tr}?',
+                    style: Styles.headLineStyle4.copyWith(color: Colors.grey),
+                  ),
+                  SizedBox(
+                    width: 5.w,
+                  ),
+                  Text(
+                    "Register".tr,
+                    style: Styles.headLineStyle4
+                        .copyWith(color: AppColors.primary),
+                  ),
                 ],
               )
             ],

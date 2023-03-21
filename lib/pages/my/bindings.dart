@@ -5,13 +5,13 @@ import 'index.dart';
 /// FileName bindings
 ///
 /// @Author LinGuanYu
-/// @Date 2023/3/20 18:24
+/// @Date 2023/3/21 17:12
 ///
 /// @Description TODO
 
-class SignInBinding implements Bindings {
+class MyBinding implements Bindings {
   @override
   void dependencies() {
-    Get.lazyPut<SignInController>(() => SignInController());
+    Get.lazyPut<MyController>(() => MyController());
   }
 }

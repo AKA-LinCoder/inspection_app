@@ -1,9 +1,13 @@
+import 'dart:async';
+
+import 'package:echo_utils/echo_utils.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:inspection_app/common/themes/texts.dart';
 
 import 'common/languages/languages.dart';
 import 'common/routes/routes.dart';
@@ -16,8 +20,28 @@ final GlobalKey<NavigatorState> appKey = GlobalKey<NavigatorState>();
 
 void main() async{
   await Global.init();
-  WidgetsFlutterBinding.ensureInitialized();
-  runApp(const MyApp());
+  runZonedGuarded(()async{
+    WidgetsFlutterBinding.ensureInitialized();
+    FlutterError.onError = (FlutterErrorDetails details) {
+      // 异常上报 转发容易遗漏异常消息
+      echoLog("捕获到意想不到的错误",error: details.exception,stackTrace: details.stack);
+      Zone.current.handleUncaughtError(details.exception, details.stack??StackTrace.current);
+    };
+    PlatformDispatcher.instance.onError = (error, stack) {
+      echoLog("全局异常",error: error,stackTrace: stack);
+      return true;
+    };
+    //自定义报错页面
+    ErrorWidget.builder = (errorDetail){
+      debugPrint(errorDetail.toString());
+      return Center(child: Text(errorDetail.toString(),style: Styles.headLineStyle3.copyWith(color: Colors.black54),),);
+    };
+    runApp(const MyApp());
+
+  } , (error, stack) {
+    echoLog("全局异常",error: error,stackTrace: stack);
+  });
+
 }
 
 class MyApp extends StatelessWidget {
@@ -57,63 +81,28 @@ class MyApp extends StatelessWidget {
             supportedLocales: ConfigStore.to.languages,
             theme: Themes.lightTheme,
             darkTheme: Themes.darkTheme,
-            // home:  MyHomePage(title: "title".tr),
             navigatorObservers: [AppPages.observer],
             initialRoute: AppPages.INITIAL,
             getPages: AppPages.routes,
             navigatorKey: appKey,
+            builder: (context,child){
+              return GestureDetector(
+                onTap: ()=>hideKeyboard(context),
+                child: child,
+              );
+            },
           );
         },
       ),
     );
   }
-}
-
-
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-  final String title;
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      body: Center(
-
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-            const Icon(Icons.access_alarm,size: 100,)
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
-    );
+  //全局隐藏键盘
+  void hideKeyboard(BuildContext context) {
+    FocusScopeNode currentFocus = FocusScope.of(context);
+    if (!currentFocus.hasPrimaryFocus && currentFocus.focusedChild != null) {
+      FocusManager.instance.primaryFocus?.unfocus();
+    }
   }
 }
+
+

@@ -11,32 +11,35 @@ import 'package:inspection_app/common/themes/colors.dart';
 /// @Description TODO 主题设置
 
 class Themes {
-
   ///白天模式
   static final lightTheme = ThemeData.light().copyWith(
     useMaterial3: true,
     // splashColor: Colors.white12,
-    appBarTheme:  const AppBarTheme(
+    appBarTheme: const AppBarTheme(
       systemOverlayStyle: SystemUiOverlayStyle.light,
       elevation: 0,
-      titleTextStyle: TextStyle(color: Colors.white,fontSize: 20),
+      scrolledUnderElevation: 0,
+      titleTextStyle: TextStyle(color: Colors.white, fontSize: 20),
+
       ///设置appbar的背景颜色
       backgroundColor: Colors.indigoAccent,
       iconTheme: IconThemeData(color: Colors.white),
     ),
+
     ///背景色
     scaffoldBackgroundColor: Colors.white,
+
     ///设置icon的颜色
     iconTheme: const IconThemeData(
       color: Colors.orange,
     ),
-
     bottomNavigationBarTheme: const BottomNavigationBarThemeData(
-        selectedItemColor: Colors.blue,
-        unselectedItemColor: Colors.tealAccent
-    ),
+        elevation: 0,
+        selectedItemColor: AppColors.primary,
+        unselectedItemColor: Colors.grey),
     //全局主题色
-    colorScheme: ColorScheme.fromSwatch(primarySwatch: AppColors.primarySwatchColor),
+    colorScheme:
+        ColorScheme.fromSwatch(primarySwatch: AppColors.primarySwatchColor),
   );
 
   ///夜间模式
@@ -54,8 +57,6 @@ class Themes {
       color: Colors.blue,
     ),
     bottomNavigationBarTheme: const BottomNavigationBarThemeData(
-        selectedItemColor: Colors.tealAccent,
-        unselectedItemColor: Colors.blue
-    ),
+        selectedItemColor: Colors.tealAccent, unselectedItemColor: Colors.blue),
   );
 }
