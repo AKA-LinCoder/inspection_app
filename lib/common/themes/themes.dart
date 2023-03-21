@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:inspection_app/common/themes/colors.dart';
 
 /// FileName themes
 ///
@@ -14,7 +15,7 @@ class Themes {
   ///白天模式
   static final lightTheme = ThemeData.light().copyWith(
     useMaterial3: true,
-    splashColor: Colors.white12,
+    // splashColor: Colors.white12,
     appBarTheme:  const AppBarTheme(
       systemOverlayStyle: SystemUiOverlayStyle.light,
       elevation: 0,
@@ -35,7 +36,7 @@ class Themes {
         unselectedItemColor: Colors.tealAccent
     ),
     //全局主题色
-    colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.red,).copyWith(background: Colors.orange),
+    colorScheme: ColorScheme.fromSwatch(primarySwatch: AppColors.primarySwatchColor),
   );
 
   ///夜间模式

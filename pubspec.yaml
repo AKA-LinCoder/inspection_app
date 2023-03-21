@@ -40,12 +40,13 @@ dependencies:
   get:
   echo_utils:
   shared_preferences: ^2.0.18
-  permission_handler:
+  permission_handler: ^10.2.0
   flutter_screenutil:
   intl:
   dio:
   path_provider:
   oktoast:
+  device_info_plus:
 
 dev_dependencies:
   flutter_test:

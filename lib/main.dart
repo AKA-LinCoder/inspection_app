@@ -1,12 +1,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import 'common/languages/languages.dart';
+import 'common/routes/routes.dart';
 import 'common/store/store.dart';
 import 'common/themes/themes.dart';
 import 'global.dart';
+
+final GlobalKey<NavigatorState> appKey = GlobalKey<NavigatorState>();
 
 void main() async{
   await Global.init();
@@ -21,30 +25,42 @@ class MyApp extends StatelessWidget {
     return ColorFiltered(
       ///一键变灰功能
       colorFilter: const ColorFilter.mode(Colors.transparent, BlendMode.color),
-      child: GetMaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'Flutter Demo',
-        translations: TranslationService(),
-        fallbackLocale: TranslationService.fallbackLocale,
-        locale: ConfigStore.to.locale,
-        ///国际化语言环境
-        localizationsDelegates: const [
-          ///初始化默认的 Material 组件本地化
-          GlobalMaterialLocalizations.delegate,
-          ///初始化默认的 通用 Widget 组件本地化
-          GlobalWidgetsLocalizations.delegate,
-          GlobalCupertinoLocalizations.delegate,
-          DefaultCupertinoLocalizations.delegate,
-          // ///自定义的语言配制文件代理 初始化
-          // MyLocationsLanguageDelegates.delegate,
-          ///支持使用 CupertinoAlertDialog 的代理
-          // FallbackCupertinoLocalisationsDelegate.delegate,
-        ],
-        ///定义当前应用程序所支持的语言环境
-        supportedLocales: ConfigStore.to.languages,
-        theme: Themes.lightTheme,
-        darkTheme: Themes.darkTheme,
-        home:  MyHomePage(title: "title".tr),
+      child: ScreenUtilInit(
+        //设计尺寸
+        designSize: const Size(360, 690),
+        //防止不同设备打包出来字体不一样
+        minTextAdapt: true,
+        builder: (BuildContext context, Widget? child) {
+          return  GetMaterialApp(
+            debugShowCheckedModeBanner: false,
+            title: 'Flutter Demo',
+            translations: TranslationService(),
+            fallbackLocale: TranslationService.fallbackLocale,
+            locale: ConfigStore.to.locale,
+            ///国际化语言环境
+            localizationsDelegates: const [
+              ///初始化默认的 Material 组件本地化
+              GlobalMaterialLocalizations.delegate,
+              ///初始化默认的 通用 Widget 组件本地化
+              GlobalWidgetsLocalizations.delegate,
+              GlobalCupertinoLocalizations.delegate,
+              DefaultCupertinoLocalizations.delegate,
+              // ///自定义的语言配制文件代理 初始化
+              // MyLocationsLanguageDelegates.delegate,
+              ///支持使用 CupertinoAlertDialog 的代理
+              // FallbackCupertinoLocalisationsDelegate.delegate,
+            ],
+            ///定义当前应用程序所支持的语言环境
+            supportedLocales: ConfigStore.to.languages,
+            theme: Themes.lightTheme,
+            darkTheme: Themes.darkTheme,
+            // home:  MyHomePage(title: "title".tr),
+            navigatorObservers: [AppPages.observer],
+            initialRoute: AppPages.INITIAL,
+            getPages: AppPages.routes,
+            navigatorKey: appKey,
+          );
+        },
       ),
     );
   }
@@ -70,7 +86,6 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
@@ -87,7 +102,7 @@ class _MyHomePageState extends State<MyHomePage> {
               '$_counter',
               style: Theme.of(context).textTheme.headlineMedium,
             ),
-            Icon(Icons.access_alarm,size: 100,)
+            const Icon(Icons.access_alarm,size: 100,)
           ],
         ),
       ),
