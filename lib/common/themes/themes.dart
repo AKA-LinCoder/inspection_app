@@ -15,15 +15,15 @@ class Themes {
   static final lightTheme = ThemeData.light().copyWith(
     useMaterial3: true,
     // splashColor: Colors.white12,
-    appBarTheme: const AppBarTheme(
+    appBarTheme:  AppBarTheme(
       systemOverlayStyle: SystemUiOverlayStyle.light,
       elevation: 0,
       scrolledUnderElevation: 0,
-      titleTextStyle: TextStyle(color: Colors.white, fontSize: 20),
+      titleTextStyle: TextStyle(color: Colors.white, fontSize: 20.sp),
 
       ///设置appbar的背景颜色
       backgroundColor: Colors.indigoAccent,
-      iconTheme: IconThemeData(color: Colors.white),
+      iconTheme: const IconThemeData(color: Colors.white),
     ),
 
     ///背景色
@@ -48,15 +48,28 @@ class Themes {
     appBarTheme: AppBarTheme(
       systemOverlayStyle: SystemUiOverlayStyle.dark,
       elevation: 0,
-      backgroundColor: ThemeData.dark().scaffoldBackgroundColor,
+      scrolledUnderElevation: 0,
+      titleTextStyle: TextStyle(color: Colors.white, fontSize: 20.sp),
+
+      ///设置appbar的背景颜色
+      backgroundColor: const Color(0xff121212),
       iconTheme: const IconThemeData(color: Colors.white),
     ),
     scaffoldBackgroundColor: ThemeData.dark().scaffoldBackgroundColor,
-    backgroundColor: Colors.black,
     iconTheme: const IconThemeData(
       color: Colors.blue,
     ),
+    textTheme: ThemeData.dark().textTheme.copyWith(
+        //     bodySmall表示较小的文本和元素。它通常用于在空间有限的情况下，例如在小型设备上的弹出窗口或对话框中。
+        //     bodyMedium表示中等大小的文本和元素。它通常用于普通大小的文本和按钮等元素的显示。
+        // bodyLarge表示较大的文本和元素。它通常用于较大的文本块，例如标题和段落，或用于突出显示特定的UI元素。
+        bodySmall: const TextStyle(color: Colors.black),
+        bodyLarge: const TextStyle(color: Colors.black),
+        bodyMedium: const TextStyle(color: Colors.black)),
     bottomNavigationBarTheme: const BottomNavigationBarThemeData(
-        selectedItemColor: Colors.tealAccent, unselectedItemColor: Colors.blue),
+        elevation: 0,
+        selectedItemColor: AppColors.primary,
+        unselectedItemColor: Colors.grey),
+    colorScheme: ColorScheme.fromSwatch(primarySwatch: AppColors.primarySwatchColor),
   );
 }

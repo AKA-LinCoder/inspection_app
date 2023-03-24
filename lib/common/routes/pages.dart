@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 
 import '../../pages/application/index.dart';
 import '../../pages/my/index.dart';
+import '../../pages/setting/index.dart';
 import '../../pages/sign_in/index.dart';
 import '../../pages/welcome/index.dart';
 import '../middlewares/router_welcome.dart';
@@ -50,6 +51,12 @@ class AppPages {
       name: AppRoutes.My,
       page: () => const MyPage(),
       binding: MyBinding(),
+    ),
+    ///设置页面
+    GetPage(
+      name: AppRoutes.Setting,
+      page: () => const SettingPage(),
+      binding: SettingBinding(),
     ),
 
   ];

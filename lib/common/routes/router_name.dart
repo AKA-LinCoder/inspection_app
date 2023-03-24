@@ -9,6 +9,7 @@ class AppRoutes {
   static const INITIAL = '/';
   static const SIGN_IN = '/sign_in';
   static const My = '/my';
+  static const Setting = "/Setting";
   static const SIGN_UP = '/sign_up';
   static const NotFound = '/not_found';
   static const Singature = '/singature';

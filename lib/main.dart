@@ -8,6 +8,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:inspection_app/common/themes/texts.dart';
+import 'package:inspection_app/pages/setting/controller.dart';
 
 import 'common/languages/languages.dart';
 import 'common/routes/routes.dart';
@@ -86,9 +87,14 @@ class MyApp extends StatelessWidget {
             getPages: AppPages.routes,
             navigatorKey: appKey,
             builder: (context,child){
+              var controller = Get.put(SettingController());
               return GestureDetector(
                 onTap: ()=>hideKeyboard(context),
-                child: child,
+                child: Obx(() => MediaQuery(
+                  ///可以在这里全局控制字体大小
+                  data: MediaQuery.of(context).copyWith(textScaleFactor: controller.states.fontSize.value),
+                  child: child??Container(),
+                )),
               );
             },
           );
