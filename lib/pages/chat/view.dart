@@ -1,6 +1,7 @@
 import 'package:echo_utils/echo_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:inspection_app/common/routes/routes.dart';
 import 'package:inspection_app/common/utils/string_extension.dart';
 import 'package:inspection_app/pages/chat/widgets/chat_choose_index.dart';
 
@@ -46,6 +47,9 @@ class ChatPage extends GetView<ChatController> {
         backgroundColor: Colors.white,
         appBar: AppBar(
           title: const Text("通讯录"),
+          actions: [
+            IconButton(onPressed: (){}, icon: Icon(Icons.add_circle_outline_outlined))
+          ],
         ),
         body: Stack(
           children: [
@@ -87,7 +91,7 @@ class ChatPage extends GetView<ChatController> {
             ),
             ///右边的快速跳转列表
             ChatChooseIndex(
-                totalHeight: MediaQuery.of(context).size.height - controller.firstItemHeight - 100,
+                totalHeight: MediaQuery.of(context).size.height - controller.firstItemHeight - 400,
                 chooseIndex: controller.states.indexLocation.value,
                 firstItemHeight: controller.firstItemHeight,
                 indexBarCallBack: (index) {
@@ -141,22 +145,17 @@ class ChatPage extends GetView<ChatController> {
               Expanded(
                 child: Container(
                   alignment: Alignment.centerLeft,
-                  color: Colors.grey[400],
+                  color: Colors.grey[300],
                   child: Padding(
                     padding: const EdgeInsets.only(left: 15),
                     child: Text(controller.states.teacherList[index].index ?? '',
                       style: const TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.normal,
-                          color: Colors.white
+                          color: Colors.black
                       ),),
                   ),
                 ),
-              ),
-
-               Divider(
-                height: 0.5,
-                color: Colors.grey[400],
               ),
             ],
           ),
@@ -201,6 +200,7 @@ class ChatPage extends GetView<ChatController> {
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
       onTap: () {
+        Get.toNamed(AppRoutes.ChatDetail);
         item.isChoose = !(item.isChoose ?? false);
         if(chooseIndex['first'] == -1) {
 
@@ -241,7 +241,7 @@ class ChatPage extends GetView<ChatController> {
                     ),
                   ],
                 ),
-                if (item.className != null && item.className != '')
+                if (item.className != '')
                   Padding(
                     padding: const EdgeInsets.only(left: 15),
                     child: Text(
@@ -254,18 +254,7 @@ class ChatPage extends GetView<ChatController> {
                   )
               ],
             ),
-            if (item.isChoose ?? false)
-              Positioned(
-                top: 10,
-                left: 0,
-                bottom: 10,
-                child: Container(
-                  width: 2.5,
-                  decoration: const BoxDecoration(
-                      borderRadius: BorderRadius.only(topRight: Radius.circular(6.0),bottomRight: Radius.circular(6.0)),
-                      color: Colors.blue
-                  ),
-                ),),
+
           ],
         ),
       ),

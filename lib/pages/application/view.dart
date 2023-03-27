@@ -35,7 +35,7 @@ class ApplicationPage extends GetView<ApplicationController> {
       bottomNavigationBar: BottomNavigationBar(
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.home_filled),label: "主页"),
-          BottomNavigationBarItem(icon: Icon(Icons.chat_outlined),label: "联系"),
+          BottomNavigationBarItem(icon: Icon(Icons.chat_outlined),label: "通讯录"),
           BottomNavigationBarItem(icon: Icon(Icons.person),label: "个人中心"),
         ],
         currentIndex: controller.state.page.value,

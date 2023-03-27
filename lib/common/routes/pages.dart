@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:inspection_app/pages/chat/index.dart';
+import 'package:inspection_app/pages/chat/widgets/chat_detail_view.dart';
 
 import '../../pages/application/index.dart';
 import '../../pages/my/index.dart';
@@ -64,6 +65,12 @@ class AppPages {
       page: () =>  ChatPage(),
       binding: ChatBinding(),
     ),
+    GetPage(
+      name: AppRoutes.ChatDetail,
+      page: () =>  const ChatDetailView(),
+      // binding: ChatBinding(),
+    ),
+
 
   ];
 
