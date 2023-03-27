@@ -6,6 +6,7 @@
 /// @Description TODO 详细的聊天页面
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ChatDetailView extends StatefulWidget {
   const ChatDetailView({Key? key}) : super(key: key);
@@ -31,7 +32,9 @@ class _ChatDetailViewState extends State<ChatDetailView> {
       appBar: AppBar(
         title: Text(name),
         actions: [
-          IconButton(onPressed: (){}, icon: const Icon(Icons.local_phone_rounded))
+          IconButton(onPressed: (){
+            launchUrl(Uri.file("13980785487"));
+          }, icon: const Icon(Icons.local_phone_rounded))
         ],
       ),
       body: const Text("详细俩天页面"),
