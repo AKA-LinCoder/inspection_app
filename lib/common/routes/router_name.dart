@@ -14,6 +14,7 @@ class AppRoutes {
   static const NotFound = '/not_found';
   static const Singature = '/singature';
   static const Application = '/application';
+  static const Chat = '/Chat';
   //修改密码页面
   static const PASS = "/PASS";
 

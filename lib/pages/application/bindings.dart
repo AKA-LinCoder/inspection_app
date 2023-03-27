@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:inspection_app/pages/my/index.dart';
 
+import '../chat/index.dart';
 import 'index.dart';
 
 /// FileName bindings
@@ -16,6 +17,7 @@ class ApplicationBinding implements Bindings {
   void dependencies() {
     Get.lazyPut<ApplicationController>(()=>ApplicationController());
     Get.lazyPut<MyController>(()=>MyController());
+    Get.lazyPut<ChatController>(() => ChatController());
 
   }
 }

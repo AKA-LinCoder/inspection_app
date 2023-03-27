@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:inspection_app/common/routes/router_name.dart';
+import 'package:inspection_app/common/store/store.dart';
 import 'package:inspection_app/common/themes/colors.dart';
 import 'package:inspection_app/common/themes/texts.dart';
 
@@ -166,9 +167,10 @@ class _SignInPageState extends State<SignInPage> with WidgetsBindingObserver {
               ),
               EchoButton(
                 buttonName: "Login".tr,
-                onPressed: () {
+                onPressed: () async{
                   if(controller.states.isAgree.value){
-                    Get.toNamed(AppRoutes.Application);
+                    await UserStore.to.setProtocol(true);
+                    Get.offAllNamed(AppRoutes.Application);
                   }else{
                     echoLog("请同意协议");
                   }
@@ -205,7 +207,7 @@ class _SignInPageState extends State<SignInPage> with WidgetsBindingObserver {
                  }, icon: controller.states.isAgree.value?const Icon(Icons.check_circle_outline,color: AppColors.primary,):const Icon(Icons.circle_outlined,color: Colors.grey,)),),
                  Expanded(
                    child: RichText(text: TextSpan(
-                       text: "登陆即代表同意",
+                       text: "勾选即代表同意",
                        style: Styles.headLineStyle4,
                        children: [
                          TextSpan(

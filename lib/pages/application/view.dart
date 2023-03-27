@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:inspection_app/pages/my/index.dart';
 
+import '../chat/index.dart';
 import 'index.dart';
 
 /// FileName view
@@ -21,28 +22,20 @@ class ApplicationPage extends GetView<ApplicationController> {
   Widget build(BuildContext context) {
     return Obx(() =>  Scaffold(
       backgroundColor: Colors.white,
-      // appBar: AppBar(
-      //   centerTitle: true,
-      //   title: Text(
-      //     "场地巡检",
-      //     style: TextStyle(
-      //         color: Colors.white, fontSize: 18.sp),
-      //   ),
-      //
-      // ),
-      // endDrawer: const userDrawer(),
       body: PageView(
         controller: controller.pageController,
         physics: const NeverScrollableScrollPhysics(),
         onPageChanged: controller.handlePageChanged,
-        children: const [
-          Text("data"),
-          MyPage(),
+        children:  [
+          const Text("data"),
+          ChatPage(),
+          const MyPage(),
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.home_filled),label: "主页"),
+          BottomNavigationBarItem(icon: Icon(Icons.chat_outlined),label: "联系"),
           BottomNavigationBarItem(icon: Icon(Icons.person),label: "个人中心"),
         ],
         currentIndex: controller.state.page.value,

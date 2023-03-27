@@ -20,13 +20,22 @@ class UserStore extends GetxController {
   bool get isLogin => _isLogin.value;
   bool get hasToken => token.isNotEmpty;
 
+  bool userProtocol = false;
+
   @override
   void onInit() {
     super.onInit();
     token = StorageService.to.getString(STORAGE_USER_TOKEN_KEY);
+    userProtocol = StorageService.to.getBool(STORAGE_USER_PROTOCOL_KEY);
     ///跳过登陆
     _isLogin.value = true;
 
+  }
+
+  // 保存 用户同意了隐私权益
+  Future<void> setProtocol(bool value) async {
+    await StorageService.to.setBool(STORAGE_USER_PROTOCOL_KEY, value);
+    userProtocol = value;
   }
 
   // 保存 token

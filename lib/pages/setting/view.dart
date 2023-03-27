@@ -72,7 +72,9 @@ class SettingPage extends GetView<SettingController> {
               ),),
               Expanded(child: Container()),
               GestureDetector(
-                onTap: (){},
+                onTap: (){
+                  Get.offAllNamed(AppRoutes.SIGN_IN);
+                },
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Container(

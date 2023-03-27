@@ -4,6 +4,7 @@ import 'package:device_info_plus/device_info_plus.dart';
 import 'package:echo_utils/echo_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:inspection_app/common/store/store.dart';
 import 'package:inspection_app/main.dart';
 import 'package:permission_handler/permission_handler.dart';
 
@@ -35,6 +36,8 @@ class SignInController extends GetxController {
   @override
   void onReady() {
     super.onReady();
+    states.isAgree.value = UserStore.to.userProtocol;
+    echoLog("用户协议${states.isAgree.value}");
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       echoLog("在这里检查权限");
     });
