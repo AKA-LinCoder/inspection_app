@@ -34,7 +34,6 @@ class MyPage extends GetView<MyController> {
   }
 
   Widget buildNestedScrollView() {
-    echoLog("重新绘制");
     return NestedScrollView(
         headerSliverBuilder: (context, isScrolled) {
           return [

@@ -93,16 +93,7 @@ class MyController extends GetxController with  GetTickerProviderStateMixin {
       animationController.forward();
     }
 
-
   }
-
-
-
-
-
-
-
-
 
   /// 生命周期
 

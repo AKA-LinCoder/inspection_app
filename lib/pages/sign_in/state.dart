@@ -1,3 +1,5 @@
+import 'package:get/get.dart';
+
 /// FileName state
 ///
 /// @Author LinGuanYu
@@ -8,5 +10,6 @@
 class SignInState {
 
 
+  RxBool isAgree = false.obs;
 
 }

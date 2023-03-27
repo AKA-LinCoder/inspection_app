@@ -2,6 +2,7 @@ import 'package:echo_utils/echo_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:inspection_app/common/routes/router_name.dart';
 import 'package:inspection_app/common/themes/colors.dart';
 import 'package:inspection_app/common/themes/texts.dart';
 
@@ -36,6 +37,7 @@ class _SignInPageState extends State<SignInPage> with WidgetsBindingObserver {
     ///检查权限
     controller.checkPermissionFunction();
   }
+  int sex = 1;
 
   @override
   void dispose() {
@@ -164,7 +166,13 @@ class _SignInPageState extends State<SignInPage> with WidgetsBindingObserver {
               ),
               EchoButton(
                 buttonName: "Login".tr,
-                onPressed: () {},
+                onPressed: () {
+                  if(controller.states.isAgree.value){
+                    Get.toNamed(AppRoutes.Application);
+                  }else{
+                    echoLog("请同意协议");
+                  }
+                },
                 height: 40.h,
                 buttonColor: AppColors.primary,
                 buttonTextStyle:
@@ -187,7 +195,36 @@ class _SignInPageState extends State<SignInPage> with WidgetsBindingObserver {
                         .copyWith(color: AppColors.primary),
                   ),
                 ],
-              )
+              ),
+              SizedBox(height: 5.h,),
+
+              Row(
+               children: [
+                 Obx(() => IconButton(onPressed: (){
+                   controller.states.isAgree.value = !controller.states.isAgree.value;
+                 }, icon: controller.states.isAgree.value?const Icon(Icons.check_circle_outline,color: AppColors.primary,):const Icon(Icons.circle_outlined,color: Colors.grey,)),),
+                 Expanded(
+                   child: RichText(text: TextSpan(
+                       text: "登陆即代表同意",
+                       style: Styles.headLineStyle4,
+                       children: [
+                         TextSpan(
+                             text: "《用户注册协议》",
+                             style: Styles.headLineStyle4.copyWith(color: AppColors.primary)
+                         ),
+                         TextSpan(
+                           text: "与",
+                           style: Styles.headLineStyle4,
+                         ),
+                         TextSpan(
+                             text: "《隐私协议》",
+                             style: Styles.headLineStyle4.copyWith(color: AppColors.primary)
+                         )
+                       ]
+                   )),
+                 )
+               ],
+             ),
             ],
           ),
         ),
