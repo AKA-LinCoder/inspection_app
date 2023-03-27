@@ -1,3 +1,4 @@
+import 'package:echo_utils/echo_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:inspection_app/common/utils/string_extension.dart';
@@ -111,6 +112,9 @@ class ChatController extends GetxController {
       TeacherChooseList("F", [
         TeacherChooseModel('FBI', false, ''),
       ]),
+      TeacherChooseList("Z", [
+        TeacherChooseModel('赵今麦', false, ''),
+      ]),
     ]);
     ///计算距离相关
     List<TeacherChooseList> dataList = states.teacherList;
@@ -138,7 +142,7 @@ class ChatController extends GetxController {
         if(dataList[j - 1].index == indexWord[i]) {
           if (j + 1 == (dataList.length)) {
             int dataIndex = j;
-            print(MediaQuery.of(context).size.height
+            echoLog(MediaQuery.of(context).size.height
                 - firstItemHeight
                 - MediaQuery.of(context).padding.top
                 - 64);

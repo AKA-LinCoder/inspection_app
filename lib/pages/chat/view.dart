@@ -1,6 +1,7 @@
 import 'package:echo_utils/echo_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:inspection_app/common/routes/routes.dart';
 import 'package:inspection_app/common/utils/string_extension.dart';
 import 'package:inspection_app/pages/chat/widgets/chat_choose_index.dart';
 
@@ -201,22 +202,23 @@ class ChatPage extends GetView<ChatController> {
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
       onTap: () {
-        item.isChoose = !(item.isChoose ?? false);
-        if(chooseIndex['first'] == -1) {
-
-          chooseIndex['first'] = first;
-          chooseIndex['second'] = index;
-        } else {
-          if(chooseIndex['first'] == first
-              && chooseIndex['second'] == index) {
-            chooseIndex['first'] = -1;
-            chooseIndex['second'] = -1;
-          }else {
-            controller.states.teacherList[chooseIndex['first']].teacherItem[chooseIndex['second']].isChoose = false;
-            chooseIndex['first'] = first;
-            chooseIndex['second'] = index;
-          }
-        }
+        // item.isChoose = !(item.isChoose ?? false);
+        // if(chooseIndex['first'] == -1) {
+        //
+        //   chooseIndex['first'] = first;
+        //   chooseIndex['second'] = index;
+        // } else {
+        //   if(chooseIndex['first'] == first
+        //       && chooseIndex['second'] == index) {
+        //     chooseIndex['first'] = -1;
+        //     chooseIndex['second'] = -1;
+        //   }else {
+        //     controller.states.teacherList[chooseIndex['first']].teacherItem[chooseIndex['second']].isChoose = false;
+        //     chooseIndex['first'] = first;
+        //     chooseIndex['second'] = index;
+        //   }
+        // }
+        Get.toNamed(AppRoutes.ChatDetail,arguments: item.name);
       },
       child: Container(
         width: double.maxFinite,
