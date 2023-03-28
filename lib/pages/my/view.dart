@@ -119,7 +119,7 @@ class MyPage extends GetView<MyController> {
           // ),
           indicator: const BoxDecoration(),
           tabs: const [
-             Tab(text: "dasd",),
+             Tab(text: "我的订单",),
              Tab(text: "待办事项",),
              Tab(text: "历史巡检",),
           ],

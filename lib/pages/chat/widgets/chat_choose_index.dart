@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:inspection_app/common/themes/colors.dart';
 
 
@@ -125,7 +126,7 @@ class ChatChooseIndexState extends State<ChatChooseIndex> {
         ),
         child: FittedBox(
           child: Text(indexWord[index], style: TextStyle(
-            fontSize: 12,
+            fontSize: 12.sp,
             fontWeight: FontWeight.normal,
             color: widget.chooseIndex == index ? AppColors.primary : Colors.blue
           ),),

@@ -1,7 +1,6 @@
 import 'package:echo_utils/echo_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:inspection_app/common/routes/routes.dart';
 import 'package:inspection_app/common/utils/string_extension.dart';
 import 'package:inspection_app/pages/chat/widgets/chat_choose_index.dart';
 
@@ -88,7 +87,7 @@ class ChatPage extends GetView<ChatController> {
             ),
             ///右边的快速跳转列表
             ChatChooseIndex(
-                totalHeight: MediaQuery.of(context).size.height - controller.firstItemHeight - 100,
+                totalHeight: MediaQuery.of(context).size.height - controller.firstItemHeight - 400,
                 chooseIndex: controller.states.indexLocation.value,
                 firstItemHeight: controller.firstItemHeight,
                 indexBarCallBack: (index) {
@@ -154,11 +153,6 @@ class ChatPage extends GetView<ChatController> {
                   ),
                 ),
               ),
-
-               Divider(
-                height: 0.5,
-                color: Colors.grey[400],
-              ),
             ],
           ),
         ),
@@ -219,6 +213,23 @@ class ChatPage extends GetView<ChatController> {
         //   }
         // }
         Get.toNamed(AppRoutes.ChatDetail,arguments: item.name);
+        Get.toNamed(AppRoutes.ChatDetail);
+        item.isChoose = !(item.isChoose ?? false);
+        if(chooseIndex['first'] == -1) {
+
+          chooseIndex['first'] = first;
+          chooseIndex['second'] = index;
+        } else {
+          if(chooseIndex['first'] == first
+              && chooseIndex['second'] == index) {
+            chooseIndex['first'] = -1;
+            chooseIndex['second'] = -1;
+          }else {
+            controller.states.teacherList[chooseIndex['first']].teacherItem[chooseIndex['second']].isChoose = false;
+            chooseIndex['first'] = first;
+            chooseIndex['second'] = index;
+          }
+        }
       },
       child: Container(
         width: double.maxFinite,
@@ -243,7 +254,7 @@ class ChatPage extends GetView<ChatController> {
                     ),
                   ],
                 ),
-                if (item.className != null && item.className != '')
+                if (item.className != '')
                   Padding(
                     padding: const EdgeInsets.only(left: 15),
                     child: Text(
@@ -256,18 +267,7 @@ class ChatPage extends GetView<ChatController> {
                   )
               ],
             ),
-            if (item.isChoose ?? false)
-              Positioned(
-                top: 10,
-                left: 0,
-                bottom: 10,
-                child: Container(
-                  width: 2.5,
-                  decoration: const BoxDecoration(
-                      borderRadius: BorderRadius.only(topRight: Radius.circular(6.0),bottomRight: Radius.circular(6.0)),
-                      color: Colors.blue
-                  ),
-                ),),
+
           ],
         ),
       ),

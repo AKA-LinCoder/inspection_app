@@ -67,9 +67,10 @@ class AppPages {
     ),
     GetPage(
       name: AppRoutes.ChatDetail,
-      page: () =>  ChatDetailView(),
+      page: () =>  const ChatDetailView(),
       // binding: ChatBinding(),
     ),
+
 
   ];
 
