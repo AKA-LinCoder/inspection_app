@@ -36,20 +36,15 @@ class _ChatDetailViewState extends State<ChatDetailView> {
     focusNode = FocusNode();
     name = Get.arguments??"";
     super.initState();
-    focusNode.addListener(() {
-      echoLog("是否聚焦${focusNode.hasFocus}");
-      controller.states.hasFocus.value = focusNode.hasFocus;
-    });
+    // focusNode.addListener(() {
+    //   echoLog("是否聚焦${focusNode.hasFocus}");
+    //   controller.states.hasFocus.value = focusNode.hasFocus;
+    // });
 
   }
 
   bool isTyping = false;
   late TextEditingController textEditingController ;
-
-
-
-
-
 
   @override
   void dispose() {
@@ -59,10 +54,8 @@ class _ChatDetailViewState extends State<ChatDetailView> {
     focusNode.dispose();
   }
 
-
   @override
   Widget build(BuildContext context) {
-    echoLog("是否聚焦${focusNode.hasFocus}");
     return  Scaffold(
       backgroundColor: Colors.grey[100],
       appBar: AppBar(
@@ -90,48 +83,173 @@ class _ChatDetailViewState extends State<ChatDetailView> {
         child: Column(
           children: [
             Obx(() => Flexible(child: ListView.builder(
+              reverse: true,
                 itemCount: controller.states.chatList.length,
                 controller: controller.chatListScrollController,
                 itemBuilder: (context,index){
-                  return ChatWidget(msg: controller.states.chatList[index].msg, chatIndex: controller.states.chatList[index].chatIndex,shouldAnimate: true, me: index%2==0?true:false,allChats: controller.states.chatList.length,);
+                  return ChatWidget(msg: controller.states.chatList[index].msg, chatIndex: controller.states.chatList[index].chatIndex,
+                    shouldAnimate: true, me: index%2==0?true:false,allChats: controller.states.chatList.length,);
                 }))),
             if(isTyping)...[
               SpinKitThreeBounce(color: AppColors.primary,size: 18.sp,)
             ],
-            SizedBox(
-              height: 50,
-              child: Material(
-                color: Colors.grey[200],
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Row(
-                    children: [
-                      IconButton(onPressed: (){}, icon: Obx(() => Icon(!controller.states.hasFocus.value?Icons.keyboard_alt_outlined:Icons.settings_voice_outlined,color: AppColors.primary,))),
-                      Expanded(
-                        child: TextField(
-                          controller: textEditingController,
-                          focusNode: focusNode,
-                          onSubmitted: (msg){
-                            sendMsg();
-                          },
-                          style: TextStyle(
-                              fontSize: 16.sp
+            ///底部输入框
+            Column(
+              children: [
+                SizedBox(
+                  height: 50,
+                  child: Material(
+                    color: Colors.grey[200],
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child:Obx(() =>  Row(
+                        children: [
+                          IconButton(onPressed: (){
+                            controller.states.textModel.value = !controller.states.textModel.value;
+                          }, icon: Obx(() => Icon(!controller.states.textModel.value?Icons.keyboard_alt_outlined:Icons.settings_voice_outlined,color: AppColors.primary,))),
+                          controller.states.textModel.value?
+                          Expanded(
+                            child: TextField(
+                              controller: textEditingController,
+                              focusNode: focusNode,
+
+                              onSubmitted: (msg){
+                                sendMsg();
+                              },
+                              style: TextStyle(
+                                  fontSize: 16.sp
+                              ),
+                              decoration:  InputDecoration.collapsed(
+                                // filled: true,
+                                // fillColor: Colors.white,
+                                  hintText: "输入你想说的话",hintStyle: TextStyle(
+                                fontSize: 16.sp,color: Colors.black,
+                              )),
+                            ),
+                          ):Expanded(child: Center(child: Text("按住说话",style: TextStyle(fontSize: 16.sp,color: Colors.black),))),
+                          InkWell(
+                            onTap: (){
+                              sendMsg();
+                            },
+                            child:const Icon(Icons.send,color: AppColors.primary,),
                           ),
-                          decoration:  InputDecoration.collapsed(
-                              // filled: true,
-                              // fillColor: Colors.white,
-                              hintText: "输入你想说的话",hintStyle: TextStyle(
-                              fontSize: 16.sp,color: Colors.black,
-                          )),
-                        ),
-                      ),
-                      IconButton(onPressed: (){
-                        sendMsg();
-                      }, icon: const Icon(Icons.send,color: AppColors.primary,))
-                    ],
+                          SizedBox(width: 10.w,),
+                          InkWell(
+                            onTap: (){
+
+                            },
+                            child:const Icon(Icons.add_circle_outline,color: AppColors.primary,),
+                          ),
+                        ],
+                      )),
+                    ),
                   ),
                 ),
-              ),
+                // Container(
+                //   width: double.infinity,
+                //   margin: EdgeInsets.only(
+                //     top: 10.w,
+                //   ),
+                //   // decoration: BoxDecoration(
+                //   //   border: Border(
+                //   //     top: BorderSide(width: 1.w, color: Colors.red),
+                //   //   ),
+                //   // ),
+                //   height: 250.w,
+                //   child: Wrap(
+                //     runAlignment: WrapAlignment.center,
+                //     alignment: WrapAlignment.center,
+                //     children: controller.chatBottomModel
+                //         .asMap()
+                //         .map(
+                //           (key, value) => MapEntry(
+                //         key,
+                //             Container(
+                //               color: Colors.red,
+                //           width: 100.w,
+                //           height: 100.w,
+                //           child: Column(
+                //             children: [
+                //               ///图标
+                //               Container(
+                //                 width: 50.w,
+                //                 height: 50.w,
+                //                 decoration: BoxDecoration(
+                //                   color: Colors.white,
+                //                   borderRadius: BorderRadius.circular(25.w),
+                //                 ),
+                //                 child: Image.asset(
+                //                   "assets/user/user4.png",
+                //                   width: 10.w,
+                //                   height: 10.w,
+                //                 ),
+                //               ),
+                //               ///文字
+                //               Padding(
+                //                 padding: EdgeInsets.only(top: 10.w),
+                //                 child: Text(
+                //                   value['title'],
+                //                   style: Styles.headLineStyle4.copyWith(fontSize: 12.sp),
+                //                 ),
+                //               )
+                //             ],
+                //           ),
+                //         ),
+                //       ),
+                //     )
+                //         .values
+                //         .toList(),
+                //   ),
+                // ),
+                Container(
+                  width: double.infinity,
+                  height: 200.w,
+                  color: Colors.red,
+                  child: GridView.builder(gridDelegate:  const SliverGridDelegateWithFixedCrossAxisCount(
+                      childAspectRatio: 2 / 2,
+                      // crossAxisSpacing: 20.w,
+                      // mainAxisSpacing: 20.w,
+                      crossAxisCount: 3
+                  ), itemBuilder: (context,index){
+                    return Container(
+                      // width: 100.w,
+                      height: 100.w,
+                      color: Colors.deepPurpleAccent,
+                      child: Center(
+                        child: Text(
+                          controller.chatBottomModel[index].title,
+                          style: Styles.headLineStyle4.copyWith(color: Colors.white,fontSize: 14.sp),
+                        ),
+                      ),
+                    );
+                  },itemCount: controller.chatBottomModel.length,
+                  ),
+                  // child: Wrap(
+                  //   children: controller.chatBottomModel.asMap().map((key, value) => MapEntry(key, Container(color: Colors.orange,width: 60.w,height:60.w,child: Text(value["title"])))).values.toList(),
+                  // ),
+                ),
+                // Container(
+                //   width: double.infinity,
+                //   height: 200.w,
+                //   color: Colors.red,
+                //   child: Wrap(
+                //     children: controller.chatBottomModel.map((e) => Container(
+                //       width: 100.w,
+                //       height: 100.w,
+                //       color: Colors.orange,
+                //       child: Center(
+                //         child: Text(
+                //           e.title,
+                //           style: Styles.headLineStyle4.copyWith(color: Colors.white,fontSize: 14.sp),
+                //         ),
+                //       ),
+                //     )).toList(),
+                //   ),
+                //   // child: Wrap(
+                //   //   children: controller.chatBottomModel.asMap().map((key, value) => MapEntry(key, Container(color: Colors.orange,width: 60.w,height:60.w,child: Text(value["title"])))).values.toList(),
+                //   // ),
+                // )
+              ],
             )
 
           ],
@@ -140,20 +258,19 @@ class _ChatDetailViewState extends State<ChatDetailView> {
     );
   }
 
-
+  ///@title sendMsg
+  ///@description TODO  发送信息
+  ///@updateTime 2023/3/29 18:58
+  ///@author LinGuanYu
   sendMsg()async{
     if (isTyping) {
        Get.snackbar(
-         "You cant send multiple messages at a time",
+         "请等待别人回复",
          "",backgroundColor: Colors.red,colorText: Colors.white
       );
-
       return;
     }
     if (textEditingController.text.isEmpty) {
-      Get.snackbar(
-        "Please type a message","",backgroundColor: Colors.red,colorText: Colors.white
-      );
       return;
     }
     //增加聊天内容

@@ -18,6 +18,6 @@ class ChatState {
   RxInt indexLocation = (-1).obs;
   RxList<ChatModel> chatList = <ChatModel>[].obs;
 
-  RxBool hasFocus = false.obs;
+  RxBool textModel = true.obs;
 
 }

@@ -40,6 +40,14 @@ class ChatController extends GetxController {
 
   late ScrollController chatListScrollController;
 
+  final List<ChatBottomModel> chatBottomModel = [
+    ChatBottomModel(title: "照片", icon: Icon(Icons.photo_camera_back)),
+    ChatBottomModel(title: "拍摄", icon: Icon(Icons.camera_alt_outlined)),
+    ChatBottomModel(title: "位置", icon: Icon(Icons.location_on_outlined)),
+    ChatBottomModel(title: "我的收藏", icon: Icon(Icons.camera_alt_outlined)),
+    ChatBottomModel(title: "转账", icon: Icon(Icons.camera_alt_outlined)),
+    ChatBottomModel(title: "相册", icon: Icon(Icons.camera_alt_outlined)),
+  ];
 
 
 
@@ -103,16 +111,19 @@ class ChatController extends GetxController {
   ///@updateTime 2023/3/29 16:19
   ///@author LinGuanYu
   void scrollListToEND() {
+
+    chatListScrollController.jumpTo(0);
+
+
     ///问题 列表并没有滑动到底部，而是滑动到了倒数第二次数据
     ///原因是执行滑动到底部的操作时，列表数据还没有更新，maxScrollExtent还是更新之前的值，所以延迟执行
-    Future.delayed(const Duration(milliseconds: 100),(){
-      chatListScrollController.animateTo(
-          chatListScrollController.position.maxScrollExtent,
-          duration:  const Duration(milliseconds: 200),
-          curve: Curves.easeOut);
-      // chatListScrollController.jumpTo(
-      //     chatListScrollController.position.maxScrollExtent);
-    });
+    // Future.delayed(const Duration(milliseconds: 100),(){
+    //   chatListScrollController.animateTo(
+    //       chatListScrollController.position.maxScrollExtent,
+    //       duration:  const Duration(milliseconds: 200),
+    //       curve: Curves.easeOut);
+    //
+    // });
     // chatListScrollController.animateTo(
     //     chatListScrollController.position.maxScrollExtent,
     //     duration:  const Duration(milliseconds: 200),

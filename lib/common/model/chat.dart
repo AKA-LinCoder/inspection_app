@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 /// FileName chat
 ///
 /// @Author LinGuanYu
@@ -14,5 +16,17 @@ class ChatModel {
   factory ChatModel.fromJson(Map<String, dynamic> json) => ChatModel(
     msg: json["msg"],
     chatIndex: json["chatIndex"],
+  );
+}
+
+class ChatBottomModel {
+  final String title;
+  final Icon icon;
+
+  ChatBottomModel({required this.title, required this.icon});
+
+  factory ChatBottomModel.fromJson(Map<String, dynamic> json) => ChatBottomModel(
+    title: json["title"],
+    icon: json["icon"],
   );
 }
