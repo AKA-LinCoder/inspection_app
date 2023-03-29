@@ -46,6 +46,8 @@ class _ChatDetailViewState extends State<ChatDetailView> {
   bool isTyping = false;
   late TextEditingController textEditingController ;
 
+  int _pageIndex = 0;
+
   @override
   void dispose() {
     // TODO: implement dispose
@@ -84,11 +86,12 @@ class _ChatDetailViewState extends State<ChatDetailView> {
           children: [
             Obx(() => Flexible(child: ListView.builder(
               reverse: true,
+                shrinkWrap: true,
                 itemCount: controller.states.chatList.length,
                 controller: controller.chatListScrollController,
                 itemBuilder: (context,index){
-                  return ChatWidget(msg: controller.states.chatList[index].msg, chatIndex: controller.states.chatList[index].chatIndex,
-                    shouldAnimate: true, me: index%2==0?true:false,allChats: controller.states.chatList.length,);
+                  return ChatWidget(msg: controller.states.chatList.reversed.toList()[index].msg, chatIndex: controller.states.chatList.reversed.toList()[index].chatIndex,
+                    shouldAnimate: true, me: controller.states.chatList.reversed.toList()[index].chatIndex%2==0?true:false,allChats: controller.states.chatList.length,);
                 }))),
             if(isTyping)...[
               SpinKitThreeBounce(color: AppColors.primary,size: 18.sp,)
@@ -204,30 +207,68 @@ class _ChatDetailViewState extends State<ChatDetailView> {
                 Container(
                   width: double.infinity,
                   height: 200.w,
-                  color: Colors.red,
-                  child: GridView.builder(gridDelegate:  const SliverGridDelegateWithFixedCrossAxisCount(
-                      childAspectRatio: 2 / 2,
-                      // crossAxisSpacing: 20.w,
-                      // mainAxisSpacing: 20.w,
-                      crossAxisCount: 3
-                  ), itemBuilder: (context,index){
-                    return Container(
-                      // width: 100.w,
-                      height: 100.w,
-                      color: Colors.deepPurpleAccent,
-                      child: Center(
-                        child: Text(
-                          controller.chatBottomModel[index].title,
-                          style: Styles.headLineStyle4.copyWith(color: Colors.white,fontSize: 14.sp),
-                        ),
-                      ),
-                    );
-                  },itemCount: controller.chatBottomModel.length,
-                  ),
-                  // child: Wrap(
-                  //   children: controller.chatBottomModel.asMap().map((key, value) => MapEntry(key, Container(color: Colors.orange,width: 60.w,height:60.w,child: Text(value["title"])))).values.toList(),
-                  // ),
+                  color: Colors.white,
+                  child: Column(
+                    children: [
+                      Expanded(child: getPageBody()),
+                      Container(
+                        height: 15.w,
+                        alignment: Alignment.center,
+                        child: ListView.builder(
+                            shrinkWrap: true,
+                            physics: const NeverScrollableScrollPhysics(),
+                            scrollDirection: Axis.horizontal,
+                            itemCount: (controller.chatBottomModel.length % 4) > 0
+                                ? (controller.chatBottomModel.length ~/ 4) + 1
+                                : (controller.chatBottomModel.length ~/ 4),
+                            itemBuilder: (context,index){
+                          return Container(
+                            alignment: const Alignment(0,.5),
+                            height: 15.w,
+                            width: 15.w,
+                            child: CircleAvatar(
+                              radius: 5,
+                              backgroundColor: _pageIndex==index?AppColors.primary:Colors.grey,
+                              child: Container(
+                                alignment: const Alignment(0,.5),
+                                height: 10.w,
+                                width: 10.w,
+                              ),
+
+                            ),
+                          );
+                        }),
+                      )
+                    ],
+                  )
                 ),
+                // Container(
+                //   width: double.infinity,
+                //   height: 200.w,
+                //   color: Colors.red,
+                //   child: GridView.builder(gridDelegate:  const SliverGridDelegateWithFixedCrossAxisCount(
+                //       // childAspectRatio: 2 / 2,
+                //       // crossAxisSpacing: 20.w,
+                //       // mainAxisSpacing: 20.w,
+                //       crossAxisCount: 3
+                //   ), itemBuilder: (context,index){
+                //     return Container(
+                //       width: 100.w,
+                //       height: 100.w,
+                //       color: Colors.deepPurpleAccent,
+                //       child: Center(
+                //         child: Text(
+                //           controller.chatBottomModel[index].title,
+                //           style: Styles.headLineStyle4.copyWith(color: Colors.white,fontSize: 14.sp),
+                //         ),
+                //       ),
+                //     );
+                //   },itemCount: controller.chatBottomModel.length,
+                //   ),
+                //   // child: Wrap(
+                //   //   children: controller.chatBottomModel.asMap().map((key, value) => MapEntry(key, Container(color: Colors.orange,width: 60.w,height:60.w,child: Text(value["title"])))).values.toList(),
+                //   // ),
+                // ),
                 // Container(
                 //   width: double.infinity,
                 //   height: 200.w,
@@ -258,7 +299,58 @@ class _ChatDetailViewState extends State<ChatDetailView> {
     );
   }
 
-  ///@title sendMsg
+
+
+  Widget getPageBody() {
+    return PageView.builder(
+      itemCount: (controller.chatBottomModel.length % 4) > 0
+          ? (controller.chatBottomModel.length ~/ 4) + 1
+          : (controller.chatBottomModel.length ~/ 4),
+      onPageChanged: (index) {
+        _pageIndex = index;
+        setState(() {});
+      },
+      itemBuilder: (BuildContext context, int index) {
+        return ScrollConfiguration(
+            behavior: const ScrollBehavior(),
+            child: GridView.builder(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              itemCount: (index < (controller.chatBottomModel.length ~/ 4))
+                  ? 4
+                  : (controller.chatBottomModel.length % 4),
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 4,
+                mainAxisSpacing: 0,
+                crossAxisSpacing: 0,
+                childAspectRatio: 1,
+              ),
+              itemBuilder: (context, position) {
+                return Container(
+                  alignment: Alignment.center,
+                  child: Column(
+                    children: [
+                      // Image.asset(
+                      //   controller.chatBottomModel[index * 4 + position].toString(),
+                      //   width: 40,
+                      //   height: 40,
+                      // ),
+                      controller.chatBottomModel[index * 4 + position].icon,
+                      Text(
+                        controller.chatBottomModel[index * 4 + position].title.toString(),
+                        style: const TextStyle(fontSize: 12),
+                      ),
+                    ],
+                  ),
+                );
+              },
+            ));
+      },
+    );}
+
+
+
+    ///@title sendMsg
   ///@description TODO  发送信息
   ///@updateTime 2023/3/29 18:58
   ///@author LinGuanYu
