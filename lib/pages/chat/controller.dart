@@ -1,6 +1,7 @@
 import 'package:echo_utils/echo_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:inspection_app/common/model/chat.dart';
 import 'package:inspection_app/common/utils/string_extension.dart';
 
 import '../../main.dart';
@@ -37,6 +38,9 @@ class ChatController extends GetxController {
   final ScrollController scrollController = ScrollController();
 
 
+  late ScrollController chatListScrollController;
+
+
 
 
 
@@ -48,6 +52,7 @@ class ChatController extends GetxController {
 
   @override
   void onInit() {
+    chatListScrollController = ScrollController();
     scrollController.addListener(() {
       final double offsetY = scrollController.offset;
       for(int i = 0; i < scrollHeightList.length; i ++) {
@@ -71,6 +76,13 @@ class ChatController extends GetxController {
   void onReady() {
 
     createData();
+    states.chatList.addAll([
+      ChatModel(msg: "你好", chatIndex: 0),
+      ChatModel(msg: "请问你是dasdasdas你打上打开送点击哦啊手机打是大数据的卡拉斯京的卡拉斯京拉开就是老大说", chatIndex: 1),
+      ChatModel(msg: "我叫玛卡巴卡kjdhlaksjhdklashdkjlashdkjlashdklajshdaslkdhasjklhdljkashdklashdlkashdklashdkljashdjklashdlkasjhdlakshdalkjhdasjkl", chatIndex: 2),
+      ChatModel(msg: "哈哈哈", chatIndex: 3),
+      ChatModel(msg: "你呢", chatIndex: 4),
+    ]);
     super.onReady();
   }
 
@@ -83,7 +95,32 @@ class ChatController extends GetxController {
   void dispose() {
     super.dispose();
     scrollController.dispose();
+    chatListScrollController.dispose();
   }
+
+  ///@title scrollListToEND
+  ///@description TODO  发送了最新消息后，自动滚动到最新的聊天处
+  ///@updateTime 2023/3/29 16:19
+  ///@author LinGuanYu
+  void scrollListToEND() {
+    ///问题 列表并没有滑动到底部，而是滑动到了倒数第二次数据
+    ///原因是执行滑动到底部的操作时，列表数据还没有更新，maxScrollExtent还是更新之前的值，所以延迟执行
+    Future.delayed(const Duration(milliseconds: 100),(){
+      chatListScrollController.animateTo(
+          chatListScrollController.position.maxScrollExtent,
+          duration:  const Duration(milliseconds: 200),
+          curve: Curves.easeOut);
+      // chatListScrollController.jumpTo(
+      //     chatListScrollController.position.maxScrollExtent);
+    });
+    // chatListScrollController.animateTo(
+    //     chatListScrollController.position.maxScrollExtent,
+    //     duration:  const Duration(milliseconds: 200),
+    //     curve: Curves.easeOut);
+
+  }
+
+
 
   ///@title createData
   ///@description TODO  创建mockData

@@ -1,6 +1,8 @@
 import 'package:get/get.dart';
 import 'package:inspection_app/pages/chat/view.dart';
 
+import '../../common/model/chat.dart';
+
 /// FileName state
 ///
 /// @Author LinGuanYu
@@ -14,4 +16,8 @@ class ChatState {
 
   // 当前选择item的位置
   RxInt indexLocation = (-1).obs;
+  RxList<ChatModel> chatList = <ChatModel>[].obs;
+
+  RxBool hasFocus = false.obs;
+
 }

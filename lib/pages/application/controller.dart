@@ -34,7 +34,6 @@ class ApplicationController extends GetxController {
 
   // tab栏页码切换
   void handlePageChanged(int page) {
-    echoLog("改变页面");
     state.page.value = page;
   }
 
