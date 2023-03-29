@@ -25,7 +25,6 @@ class RouteWelcomeMiddleware extends GetMiddleware {
     if (ConfigStore.to.isFirstOpen == true) {
       return null;
     } else if (UserStore.to.isLogin == true) {
-      return const RouteSettings(name: AppRoutes.SIGN_IN);
       ///如果token存在就前往首页
       return const RouteSettings(name: AppRoutes.Application);
     } else {

@@ -112,8 +112,16 @@ class ChatController extends GetxController {
       TeacherChooseList("F", [
         TeacherChooseModel('FBI', false, ''),
       ]),
+      TeacherChooseList("L", [
+        TeacherChooseModel('刘柯妤', false, ''),
+      ]),
+      TeacherChooseList("Y", [
+        TeacherChooseModel('杨建新', false, ''),
+        TeacherChooseModel('杨丹', false, ''),
+      ]),
       TeacherChooseList("Z", [
         TeacherChooseModel('赵今麦', false, ''),
+        TeacherChooseModel('张中海', false, ''),
       ]),
     ]);
     ///计算距离相关

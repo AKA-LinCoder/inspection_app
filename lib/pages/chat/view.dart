@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:inspection_app/common/utils/string_extension.dart';
 import 'package:inspection_app/pages/chat/widgets/chat_choose_index.dart';
 
+import '../../common/routes/router_name.dart';
 import '../../common/themes/colors.dart';
 import '../../main.dart';
 import 'index.dart';
@@ -196,40 +197,7 @@ class ChatPage extends GetView<ChatController> {
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
       onTap: () {
-        // item.isChoose = !(item.isChoose ?? false);
-        // if(chooseIndex['first'] == -1) {
-        //
-        //   chooseIndex['first'] = first;
-        //   chooseIndex['second'] = index;
-        // } else {
-        //   if(chooseIndex['first'] == first
-        //       && chooseIndex['second'] == index) {
-        //     chooseIndex['first'] = -1;
-        //     chooseIndex['second'] = -1;
-        //   }else {
-        //     controller.states.teacherList[chooseIndex['first']].teacherItem[chooseIndex['second']].isChoose = false;
-        //     chooseIndex['first'] = first;
-        //     chooseIndex['second'] = index;
-        //   }
-        // }
         Get.toNamed(AppRoutes.ChatDetail,arguments: item.name);
-        Get.toNamed(AppRoutes.ChatDetail);
-        item.isChoose = !(item.isChoose ?? false);
-        if(chooseIndex['first'] == -1) {
-
-          chooseIndex['first'] = first;
-          chooseIndex['second'] = index;
-        } else {
-          if(chooseIndex['first'] == first
-              && chooseIndex['second'] == index) {
-            chooseIndex['first'] = -1;
-            chooseIndex['second'] = -1;
-          }else {
-            controller.states.teacherList[chooseIndex['first']].teacherItem[chooseIndex['second']].isChoose = false;
-            chooseIndex['first'] = first;
-            chooseIndex['second'] = index;
-          }
-        }
       },
       child: Container(
         width: double.maxFinite,
