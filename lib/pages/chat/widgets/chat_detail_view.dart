@@ -25,7 +25,7 @@ class ChatDetailView extends StatefulWidget {
   State<ChatDetailView> createState() => _ChatDetailViewState();
 }
 
-class _ChatDetailViewState extends State<ChatDetailView> {
+class _ChatDetailViewState extends State<ChatDetailView>  with WidgetsBindingObserver{
   final controller = Get.find<ChatController>();
   late FocusNode focusNode;
   late String name;
@@ -36,6 +36,7 @@ class _ChatDetailViewState extends State<ChatDetailView> {
     focusNode = FocusNode();
     name = Get.arguments ?? "";
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
     focusNode.addListener(() {
       if (focusNode.hasFocus) {
         controller.states.contentShow.value = true;
@@ -50,11 +51,27 @@ class _ChatDetailViewState extends State<ChatDetailView> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
-    super.dispose();
+    WidgetsBinding.instance.removeObserver(this);
     textEditingController.dispose();
     focusNode.dispose();
+    super.dispose();
+
   }
+
+
+  @override
+  void didChangeMetrics() {
+    // TODO: implement didChangeMetrics
+    super.didChangeMetrics();
+    if(mounted){
+      final double viewInsetBottom = EdgeInsets.fromWindowPadding(WidgetsBinding.instance.window.viewInsets, WidgetsBinding.instance.window.devicePixelRatio).bottom;
+      echoLog("当前键盘高度$viewInsetBottom");
+      if(viewInsetBottom>0){
+        controller.states.keyboardHeight.value = viewInsetBottom;
+      }
+    }
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -157,10 +174,10 @@ class _ChatDetailViewState extends State<ChatDetailView> {
                             children: [
                               IconButton(
                                   onPressed: () {
-                                    if (controller.states.textModel.value) {
-                                      controller.states.contentShow.value =
-                                          false;
-                                    }
+                                    // if (controller.states.textModel.value) {
+                                    //   controller.states.contentShow.value =
+                                    //       false;
+                                    // }
                                     controller.states.textModel.value =
                                         !controller.states.textModel.value;
                                   },
@@ -242,7 +259,12 @@ class _ChatDetailViewState extends State<ChatDetailView> {
                                 width: 10.w,
                               ),
                               InkWell(
-                                onTap: () {},
+                                onTap: () {
+                                  controller.states.contentShow.value = !controller.states.contentShow.value;
+                                  if(controller.states.contentShow.value){
+                                    controller.states.keyboardHeight.value = 200.w;
+                                  }
+                                },
                                 child: const Icon(
                                   Icons.add_circle_outline,
                                   color: AppColors.primary,
@@ -253,8 +275,8 @@ class _ChatDetailViewState extends State<ChatDetailView> {
                     ),
                   ),
                 ),
-                //             Obx(() => controller.states.contentShow.value?
-                // ChatBottom(pageCount: 8, items: controller.chatBottomModel, pageIndex: _pageIndex,):Container())
+                            Obx(() => controller.states.contentShow.value?
+                ChatBottom(pageCount: 8, items: controller.chatBottomModel, pageIndex: _pageIndex, height: controller.states.keyboardHeight.value,):Container())
               ],
             )
           ],

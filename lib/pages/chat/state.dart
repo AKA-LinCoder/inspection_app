@@ -1,3 +1,4 @@
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:inspection_app/pages/chat/view.dart';
 
@@ -23,6 +24,6 @@ class ChatState {
   ///控制是否显示附件区域
   RxBool contentShow = false.obs;
 
-  RxDouble keyboardHeight = (200.0).obs;
+  RxDouble keyboardHeight = (200.w).obs;
 
 }

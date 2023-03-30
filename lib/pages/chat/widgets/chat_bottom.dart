@@ -4,6 +4,7 @@
 /// @Date 2023/3/29 19:48
 ///
 /// @Description TODO 聊天底部输入框
+import 'package:echo_utils/echo_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -13,7 +14,8 @@ class ChatBottom extends StatefulWidget {
   final int pageCount;
   final List<ChatBottomModel> items;
   int pageIndex;
-  ChatBottom({Key? key, required this.pageCount, required this.items, required this.pageIndex}) : super(key: key);
+  double height;
+  ChatBottom({Key? key, required this.pageCount, required this.items, required this.pageIndex,required this.height}) : super(key: key);
 
   @override
   State<ChatBottom> createState() => _ChatBottomState();
@@ -22,9 +24,11 @@ class ChatBottom extends StatefulWidget {
 class _ChatBottomState extends State<ChatBottom> {
   @override
   Widget build(BuildContext context) {
+    echoLog("要显示的高${widget.height}");
     return Container(
         width: double.infinity,
-        height: 200.w,
+        // margin: EdgeInsets.only(top: 10),
+        height: widget.height,
         color: Colors.grey[200],
         child: Column(
           children: [
