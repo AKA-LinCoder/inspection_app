@@ -21,7 +21,7 @@ class ChatModel {
 
 class ChatBottomModel {
   final String title;
-  final Icon icon;
+  Icon icon;
 
   ChatBottomModel({required this.title, required this.icon});
 

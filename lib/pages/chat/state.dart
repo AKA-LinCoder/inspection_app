@@ -20,4 +20,9 @@ class ChatState {
 
   RxBool textModel = true.obs;
 
+  ///控制是否显示附件区域
+  RxBool contentShow = false.obs;
+
+  RxDouble keyboardHeight = (200.0).obs;
+
 }

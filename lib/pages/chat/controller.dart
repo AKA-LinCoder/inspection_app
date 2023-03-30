@@ -41,12 +41,16 @@ class ChatController extends GetxController {
   late ScrollController chatListScrollController;
 
   final List<ChatBottomModel> chatBottomModel = [
-    ChatBottomModel(title: "照片", icon: Icon(Icons.photo_camera_back)),
-    ChatBottomModel(title: "拍摄", icon: Icon(Icons.camera_alt_outlined)),
-    ChatBottomModel(title: "位置", icon: Icon(Icons.location_on_outlined)),
-    ChatBottomModel(title: "我的收藏", icon: Icon(Icons.camera_alt_outlined)),
-    ChatBottomModel(title: "转账", icon: Icon(Icons.camera_alt_outlined)),
-    ChatBottomModel(title: "相册", icon: Icon(Icons.camera_alt_outlined)),
+    ChatBottomModel(title: "照片", icon: const Icon(Icons.photo_camera_back,color: Colors.black54,)),
+    ChatBottomModel(title: "拍摄", icon: const Icon(Icons.camera_alt_outlined,color: Colors.black54,)),
+    ChatBottomModel(title: "视频通话", icon: const Icon(Icons.location_on_outlined,color: Colors.black54,)),
+    ChatBottomModel(title: "位置", icon: const Icon(Icons.location_on_outlined,color: Colors.black54,)),
+    ChatBottomModel(title: "红包", icon: const Icon(Icons.location_on_outlined,color: Colors.black54,)),
+    ChatBottomModel(title: "转账", icon: const Icon(Icons.camera_alt_outlined,color: Colors.black54,)),
+    ChatBottomModel(title: "个人名片", icon: const Icon(Icons.card_giftcard_outlined,color: Colors.black54,)),
+    ChatBottomModel(title: "我的收藏", icon: const Icon(Icons.favorite,color: Colors.black54,)),
+
+    ChatBottomModel(title: "音乐", icon: const Icon(Icons.music_note,color: Colors.black54,)),
   ];
 
 
@@ -112,7 +116,14 @@ class ChatController extends GetxController {
   ///@author LinGuanYu
   void scrollListToEND() {
 
-    chatListScrollController.jumpTo(0);
+    ///3-30最新的解决办法，添加帧回调，将在listview完成渲染之后调用，保证滚动到最下面
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      chatListScrollController.animateTo(
+        chatListScrollController.position.maxScrollExtent,
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeOut,
+      );
+    });
 
 
     ///问题 列表并没有滑动到底部，而是滑动到了倒数第二次数据
