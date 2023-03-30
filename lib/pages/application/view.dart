@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:inspection_app/pages/home/index.dart';
 import 'package:inspection_app/pages/my/index.dart';
 
 import '../chat/index.dart';
@@ -27,7 +28,7 @@ class ApplicationPage extends GetView<ApplicationController> {
         physics: const NeverScrollableScrollPhysics(),
         onPageChanged: controller.handlePageChanged,
         children:  [
-          const Text("data"),
+          const HomePage(),
           ChatPage(),
           const MyPage(),
         ],
