@@ -8,7 +8,7 @@
 const Map<String, String> en_US = {
   'title': 'This is Title!',
   'login': 'logged in as @name with email @email',
-  'email': 'Email',
+  'email': 'Account',
   'Login':'Login',
   'password':'password',
   'forgetPassword':'Forget Password',

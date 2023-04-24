@@ -16,6 +16,7 @@ class AppRoutes {
   static const Application = '/application';
   static const Chat = '/Chat';
   static const ChatDetail = '/ChatDetail';
+  static const InspectionDetail = '/InspectionDetail';
   //修改密码页面
   static const PASS = "/PASS";
 

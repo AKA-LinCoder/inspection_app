@@ -4,10 +4,14 @@ import 'package:device_info_plus/device_info_plus.dart';
 import 'package:echo_utils/echo_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:inspection_app/common/api/user.dart';
+import 'package:inspection_app/common/entities/user.dart';
 import 'package:inspection_app/common/store/store.dart';
+import 'package:inspection_app/common/utils/loading.dart';
 import 'package:inspection_app/main.dart';
 import 'package:permission_handler/permission_handler.dart';
 
+import '../../common/routes/router_name.dart';
 import '../../common/utils/permission_util.dart';
 import 'index.dart';
 
@@ -41,6 +45,25 @@ class SignInController extends GetxController {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       echoLog("在这里检查权限");
     });
+  }
+
+
+  toLogin()async{
+    Loading.show("登录中");
+    var params = UserLoginRequestEntity(userName: accountController.text, passWord: passController.text);
+    var res = await UserAPI.login(params: params);
+    Loading.dismiss();
+    if(res.code==200){
+
+      //存储用户权限
+      UserLoginResponseEntity user = UserLoginResponseEntity.fromJson(res.data);
+      await UserStore.to.setUserName(user.name);
+      await UserStore.to.setToken(user.token);
+      await UserStore.to.setStaffId(user.staffId);
+      Get.offAllNamed(AppRoutes.Application);
+    }else{
+
+    }
   }
 
 

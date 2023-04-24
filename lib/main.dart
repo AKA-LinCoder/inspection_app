@@ -4,6 +4,9 @@ import 'package:echo_utils/echo_utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:oktoast/oktoast.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -25,7 +28,7 @@ void main() async{
     WidgetsFlutterBinding.ensureInitialized();
     FlutterError.onError = (FlutterErrorDetails details) {
       // 异常上报 转发容易遗漏异常消息
-      echoLog("捕获到意想不到的错误",error: details.exception,stackTrace: details.stack);
+      // echoLog("捕获到意想不到的错误",error: details.exception,stackTrace: details.stack);
       Zone.current.handleUncaughtError(details.exception, details.stack??StackTrace.current);
     };
     PlatformDispatcher.instance.onError = (error, stack) {
@@ -53,53 +56,85 @@ class MyApp extends StatelessWidget {
     return ColorFiltered(
       ///一键变灰功能
       colorFilter: const ColorFilter.mode(Colors.transparent, BlendMode.color),
-      child: ScreenUtilInit(
-        //设计尺寸
-        designSize: const Size(360, 690),
-        //防止不同设备打包出来字体不一样
-        minTextAdapt: true,
-        builder: (BuildContext context, Widget? child) {
-          return  GetMaterialApp(
-            debugShowCheckedModeBanner: false,
-            title: 'Flutter Demo',
-            translations: TranslationService(),
-            fallbackLocale: TranslationService.fallbackLocale,
-            locale: ConfigStore.to.locale,
-            ///国际化语言环境
-            localizationsDelegates: const [
-              ///初始化默认的 Material 组件本地化
-              GlobalMaterialLocalizations.delegate,
-              ///初始化默认的 通用 Widget 组件本地化
-              GlobalWidgetsLocalizations.delegate,
-              GlobalCupertinoLocalizations.delegate,
-              DefaultCupertinoLocalizations.delegate,
-              // ///自定义的语言配制文件代理 初始化
-              // MyLocationsLanguageDelegates.delegate,
-              ///支持使用 CupertinoAlertDialog 的代理
-              // FallbackCupertinoLocalisationsDelegate.delegate,
-            ],
-            ///定义当前应用程序所支持的语言环境
-            supportedLocales: ConfigStore.to.languages,
-            theme: Themes.lightTheme,
-            darkTheme: Themes.darkTheme,
-            navigatorObservers: [AppPages.observer],
-            initialRoute: AppPages.INITIAL,
-            getPages: AppPages.routes,
-            navigatorKey: appKey,
-            builder: (context,child){
-              var controller = Get.put(SettingController());
-              return GestureDetector(
-                onTap: ()=>hideKeyboard(context),
-                child: Obx(() => MediaQuery(
-                  ///可以在这里全局控制字体大小
-                  data: MediaQuery.of(context).copyWith(textScaleFactor: controller.states.fontSize.value),
-                  child: child??Container(),
-                )),
-              );
-            },
-          );
-        },
+      child: RefreshConfiguration(
+        headerBuilder: () => const ClassicHeader(
+          refreshingText: "刷新中...",
+          completeText: '加载完成',
+          failedText: '加载失败',
+          releaseText: '松开刷新',
+          idleText: '下拉刷新',
+        ),
+        footerBuilder: () => const ClassicFooter(
+          noDataText: '没有更多了',
+          loadingText: "加载中...",
+          failedText: '加载失败',
+          canLoadingText: '松开加载更多',
+          idleText: '上拉加载更多',
+        ),
+        hideFooterWhenNotFull: true,
+        headerTriggerDistance: 80,
+        maxOverScrollExtent: 100,
+        footerTriggerDistance: 150,
+        child: ScreenUtilInit(
+          //设计尺寸
+          designSize: const Size(360, 690),
+          //防止不同设备打包出来字体不一样
+          minTextAdapt: true,
+          builder: (BuildContext context, Widget? child) {
+            return  OKToast(
+              textStyle: TextStyle(fontSize: 24.sp),
+              backgroundColor: Colors.black,
+              textPadding:
+              EdgeInsets.symmetric(horizontal: 10.sp, vertical: 10.sp),
+              radius: 8,
+              position: ToastPosition.top,
+              child: GetMaterialApp(
+                debugShowCheckedModeBanner: false,
+                title: 'Flutter Demo',
+                translations: TranslationService(),
+                fallbackLocale: TranslationService.fallbackLocale,
+                locale: ConfigStore.to.locale,
+                ///国际化语言环境
+                localizationsDelegates: const [
+                  ///初始化默认的 Material 组件本地化
+                  GlobalMaterialLocalizations.delegate,
+                  ///初始化默认的 通用 Widget 组件本地化
+                  GlobalWidgetsLocalizations.delegate,
+                  GlobalCupertinoLocalizations.delegate,
+                  DefaultCupertinoLocalizations.delegate,
+                  // ///自定义的语言配制文件代理 初始化
+                  // MyLocationsLanguageDelegates.delegate,
+                  ///支持使用 CupertinoAlertDialog 的代理
+                  // FallbackCupertinoLocalisationsDelegate.delegate,
+                ],
+                ///定义当前应用程序所支持的语言环境
+                supportedLocales: ConfigStore.to.languages,
+                theme: Themes.lightTheme,
+                darkTheme: Themes.darkTheme,
+                navigatorObservers: [AppPages.observer],
+                initialRoute: AppPages.INITIAL,
+                getPages: AppPages.routes,
+                navigatorKey: appKey,
+                builder: (context,child){
+                  var controller = Get.put(SettingController());
+                  final easyLoad = EasyLoading.init();
+                  child = easyLoad(context, child);
+                  return GestureDetector(
+                    onTap: ()=>hideKeyboard(context),
+                    child: Obx(() => MediaQuery(
+                      ///可以在这里全局控制字体大小
+                      data: MediaQuery.of(context).copyWith(textScaleFactor: controller.states.fontSize.value),
+                      child: child??Container(),
+                    )),
+                  );
+                },
+              ),
+            );
+          },
+        ),
+
       ),
+
     );
   }
   //全局隐藏键盘

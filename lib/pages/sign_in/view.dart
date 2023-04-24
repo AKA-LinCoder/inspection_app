@@ -1,5 +1,6 @@
 import 'package:echo_utils/echo_utils.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:inspection_app/common/routes/router_name.dart';
@@ -170,8 +171,9 @@ class _SignInPageState extends State<SignInPage> with WidgetsBindingObserver {
                 onPressed: () async{
                   if(controller.states.isAgree.value){
                     await UserStore.to.setProtocol(true);
-                    Get.offAllNamed(AppRoutes.Application);
+                    await controller.toLogin();
                   }else{
+                    EasyLoading.showError("请同意协议");
                     echoLog("请同意协议");
                   }
                 },

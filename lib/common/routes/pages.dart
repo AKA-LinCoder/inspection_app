@@ -4,6 +4,7 @@ import 'package:inspection_app/pages/chat/index.dart';
 import 'package:inspection_app/pages/chat/widgets/chat_detail_view.dart';
 
 import '../../pages/application/index.dart';
+import '../../pages/inspection_detail/index.dart';
 import '../../pages/my/index.dart';
 import '../../pages/setting/index.dart';
 import '../../pages/sign_in/index.dart';
@@ -69,6 +70,11 @@ class AppPages {
       name: AppRoutes.ChatDetail,
       page: () =>   ChatDetailView(),
       // binding: ChatBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.InspectionDetail,
+      page: () =>  const InspectionDetailPage(),
+      binding: InspectionDetailBinding(),
     ),
 
 
