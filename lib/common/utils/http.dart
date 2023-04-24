@@ -388,7 +388,7 @@ class HttpUtil {
   }
 
   /// restful post form 表单提交操作
-  Future postForm(
+  Future<LinResponse> postForm(
       String path, {
         dynamic data,
         Map<String, dynamic>? queryParameters,
@@ -407,8 +407,25 @@ class HttpUtil {
       options: requestOptions,
       cancelToken: cancelToken,
     );
-    return response.data;
+    return handyResponse(response.data);
   }
+
+
+  // ///上传文件
+  // Future dioUpload(String url,
+  //     {String method = "post", required FormData data}) async {
+  //   //1.创建单独配置
+  //   final options = Options(method: method);
+  //   try {
+  //     Response response = await dio.request(url, data: data, options: options);
+  //     return response.data;
+  //   } catch (e, stack) {
+  //     //echoLog('上传文件失败',error: e,stackTrace: stack);
+  //     Toast.show(e.toString());
+  //     return e;
+  //   }
+  // }
+
 
   /// restful post Stream 流数据
   Future postStream(

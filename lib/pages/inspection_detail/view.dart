@@ -144,7 +144,9 @@ class InspectionDetailPage extends GetView<InspectionDetailController> {
                 buttonTextStyle: TextStyle(
                   fontSize: 16.sp
                 ),
-                onPressed: () {})
+                onPressed: () async{
+                  await controller.commit();
+                })
           ],
         ),
       ),
