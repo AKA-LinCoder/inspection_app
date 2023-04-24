@@ -1,3 +1,4 @@
+import 'package:echo_utils/echo_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -7,6 +8,7 @@ import 'package:inspection_app/pages/inspection_detail/widget/form.dart';
 import 'package:inspection_app/pages/my/index.dart';
 
 import '../../common/entities/inspection.dart';
+import '../../common/themes/colors.dart';
 import '../chat/index.dart';
 import 'index.dart';
 
@@ -20,12 +22,10 @@ import 'index.dart';
 class InspectionDetailPage extends GetView<InspectionDetailController> {
   const InspectionDetailPage({Key? key}) : super(key: key);
 
-
-
   @override
   Widget build(BuildContext context) {
     InspectionTask item = Get.arguments;
-    return  Scaffold(
+    return Scaffold(
       appBar: AppBar(
         title: const Text("巡检详情"),
       ),
@@ -35,48 +35,69 @@ class InspectionDetailPage extends GetView<InspectionDetailController> {
             Row(
               children: [
                 Text("设备名称"),
-                SizedBox(width: 5.w,),
+                SizedBox(
+                  width: 5.w,
+                ),
                 Text(item.equipmentName),
               ],
             ),
-            SizedBox(height: 10.h,),
+            SizedBox(
+              height: 10.h,
+            ),
             Row(
               children: [
                 Text("设备地址"),
-                SizedBox(width: 5.w,),
+                SizedBox(
+                  width: 5.w,
+                ),
                 Text(item.address),
               ],
             ),
             Row(
               children: [
-                Text("检查项目",style: TextStyle(fontSize: 16.sp,fontWeight: FontWeight.bold),),
+                Text(
+                  "检查项目",
+                  style:
+                      TextStyle(fontSize: 16.sp, fontWeight: FontWeight.bold),
+                ),
                 Expanded(child: Container()),
-
               ],
             ),
             Padding(
-              padding:  EdgeInsets.only(top: 8.r,right: 8.r,left: 8.r),
+              padding: EdgeInsets.only(top: 8.r, right: 8.r, left: 8.r),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Table(
-                    border:  const TableBorder(
-                      top: BorderSide(color: Color(0xFF000000),width: 1,style: BorderStyle.solid),
+                    border: const TableBorder(
+                      top: BorderSide(
+                          color: Color(0xFF000000),
+                          width: 1,
+                          style: BorderStyle.solid),
                       // horizontalInside: BorderSide(width: 1, color: Colors.grey),
                       bottom: BorderSide.none,
-                      left: BorderSide(color: Color(0xFF000000),width: 1,style: BorderStyle.solid),
-                      right: BorderSide(color: Color(0xFF000000),width: 1,style: BorderStyle.solid),
-                      verticalInside: BorderSide(color: Color(0xFF000000),width: 1,style: BorderStyle.solid),
+                      left: BorderSide(
+                          color: Color(0xFF000000),
+                          width: 1,
+                          style: BorderStyle.solid),
+                      right: BorderSide(
+                          color: Color(0xFF000000),
+                          width: 1,
+                          style: BorderStyle.solid),
+                      verticalInside: BorderSide(
+                          color: Color(0xFF000000),
+                          width: 1,
+                          style: BorderStyle.solid),
                     ),
                     // border: TableBorder.all(), // 设置表格边框
-                    children:  [
+                    children: [
                       TableRow(
                         children: [
                           TableCell(
                             child: Container(
                                 height: 50,
-                               alignment: Alignment.center,
-                               child: Text('巡检点')),
+                                alignment: Alignment.center,
+                                child: Text('巡检点')),
                           ),
                           TableCell(
                             child: Container(
@@ -97,30 +118,36 @@ class InspectionDetailPage extends GetView<InspectionDetailController> {
                 ],
               ),
             ),
-            ...item.content.map((e) => InspectionTaskForm( content: e,)).toList(),
+            ...item.content
+                .map((e) => InspectionTaskForm(
+                      content: e,
+                    ))
+                .toList(),
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child:  EchoAssetPicker(
+              child: EchoAssetPicker(
                 maxAssets: 9,
                 bgColor: Colors.transparent,
                 oldAssets: controller.assets,
-                callBack: (assetList){
-
+                callBack: (assetList) {
                   controller.assets = assetList;
                 },
               ),
             ),
-
-
+            SizedBox(
+              height: 30.h,
+            ),
+            EchoButton(
+                height: 40.h,
+                buttonName: "完成",
+                buttonColor: AppColors.primary,
+                buttonTextStyle: TextStyle(
+                  fontSize: 16.sp
+                ),
+                onPressed: () {})
           ],
         ),
       ),
     );
   }
-
-
-
-
-
-
 }
