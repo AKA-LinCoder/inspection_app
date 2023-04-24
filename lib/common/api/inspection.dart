@@ -135,7 +135,7 @@ class InspectionAPI {
           EasyLoading.showError('图片地址为空');
         } else {
           // ImageModel imageModel = ImageModel.fromJson(dataPath);
-          path.add("");
+          path.add(dataPath);
         }
       }else{
 
