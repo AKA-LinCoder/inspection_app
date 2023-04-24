@@ -55,49 +55,16 @@ class InspectionAPI {
   // @date 2023/4/23 10:55
   //
   static Future<LinResponse> addRecord({
-    required String params,
+    required Map params,
   }) async {
 
     LinResponse response = await HttpUtil().post(
       'Record/addRecord',
-      data: {
-        "staffId":params
-      },
+      data: params,
     );
     return response;
 
   }
-
-
-
-  static Future<LinResponse> addImage({
-    required String params,
-  }) async {
-
-    LinResponse response = await HttpUtil().post(
-      '/imageOss/uploadImage',
-      data: {
-        "staffId":params
-      },
-    );
-    return response;
-
-  }
-
-  static Future<LinResponse> addVideo({
-    required String params,
-  }) async {
-
-    LinResponse response = await HttpUtil().post(
-      '/imageOss/video',
-      data: {
-        "staffId":params
-      },
-    );
-    return response;
-
-  }
-
 
   static Future<List<String>> updateFiles(
       {required List<AssetEntity> assets}) async {

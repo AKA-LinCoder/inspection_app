@@ -24,7 +24,7 @@ class InspectionDetailPage extends GetView<InspectionDetailController> {
 
   @override
   Widget build(BuildContext context) {
-    InspectionTask item = Get.arguments;
+
     return Scaffold(
       appBar: AppBar(
         title: const Text("巡检详情"),
@@ -38,7 +38,7 @@ class InspectionDetailPage extends GetView<InspectionDetailController> {
                 SizedBox(
                   width: 5.w,
                 ),
-                Text(item.equipmentName),
+                Text(controller.item.equipmentName),
               ],
             ),
             SizedBox(
@@ -50,7 +50,7 @@ class InspectionDetailPage extends GetView<InspectionDetailController> {
                 SizedBox(
                   width: 5.w,
                 ),
-                Text(item.address),
+                Text(controller.item.address),
               ],
             ),
             Row(
@@ -118,11 +118,7 @@ class InspectionDetailPage extends GetView<InspectionDetailController> {
                 ],
               ),
             ),
-            ...item.content
-                .map((e) => InspectionTaskForm(
-                      content: e,
-                    ))
-                .toList(),
+            ...controller.inspectionTaskFormList,
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: EchoAssetPicker(
