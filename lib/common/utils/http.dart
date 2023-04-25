@@ -248,8 +248,6 @@ class HttpUtil {
       }
 
     }
-    // var msg = getDecrypted(data["data"]);
-    // print("这是解密之后的数据$msg");
     LinResponse linResponse = LinResponse(code: data["code"], data: data["data"], message: data["msg"]);
     return linResponse;
 
@@ -402,7 +400,7 @@ class HttpUtil {
     }
     var response = await dio.post(
       path,
-      data: FormData.fromMap(data),
+      data: data,
       queryParameters: queryParameters,
       options: requestOptions,
       cancelToken: cancelToken,
@@ -411,20 +409,16 @@ class HttpUtil {
   }
 
 
-  // ///上传文件
-  // Future dioUpload(String url,
-  //     {String method = "post", required FormData data}) async {
-  //   //1.创建单独配置
-  //   final options = Options(method: method);
-  //   try {
-  //     Response response = await dio.request(url, data: data, options: options);
-  //     return response.data;
-  //   } catch (e, stack) {
-  //     //echoLog('上传文件失败',error: e,stackTrace: stack);
-  //     Toast.show(e.toString());
-  //     return e;
-  //   }
-  // }
+   ///上传文件
+   Future<LinResponse> dioUpload(String url,
+       {String method = "post", required FormData data}) async {
+     //1.创建单独配置
+        final options = Options(method: method);
+    
+      Response response = await dio.request(url, data: data, options: options);
+      return handyResponse(response.data);
+
+   }
 
 
   /// restful post Stream 流数据

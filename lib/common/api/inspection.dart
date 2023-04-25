@@ -95,7 +95,7 @@ class InspectionAPI {
 
       FormData formData = FormData.fromMap(map);
 
-      final result = await HttpUtil().postForm(url, data: formData);
+      final result = await HttpUtil().dioUpload(url, data: formData);
       if(result.code==200){
         final dataPath = result.data;
         if (dataPath == null) {

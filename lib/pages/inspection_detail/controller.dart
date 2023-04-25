@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:inspection_app/common/api/inspection.dart';
 import 'package:inspection_app/common/store/store.dart';
 import 'package:inspection_app/pages/inspection_detail/widget/form.dart';
+import 'package:intl/intl.dart';
 import 'package:wechat_assets_picker/wechat_assets_picker.dart';
 
 import '../../common/entities/inspection.dart';
@@ -52,66 +53,70 @@ class InspectionDetailController extends GetxController {
 
 
   commit()async{
-    EasyLoading.show(status: "文件上传中");
-    List<String> files =  await InspectionAPI.updateFiles(assets: assets,);
-    EasyLoading.dismiss();
-    if(files.isEmpty){
-      print("文件上传失败");
-    }else{
-      var photo = [];
-      var video = [];
-      for (var element in files) {
-        if(element.toLowerCase().endsWith("jpg")||element.toLowerCase().endsWith("png")){
-          photo.add(element);
-        }else{
-          video.add(element);
-        }
-      }
-      EasyLoading.show(status: "数据上传中");
-      InspectionTask item = Get.arguments;
-      var record = "";
-      if (inspectionTaskFormList.isNotEmpty) {
-        var allValid = true;
-        inspectionTaskFormList.forEach((element) {
-          allValid = allValid && element.isValid();
-        });
-        if (allValid) {
-          List<Map<String, dynamic>> contentList = [];
-          for (int i = 0; i < inspectionTaskFormList.length; i++) {
-            var map = {
-              'isTrue': inspectionTaskFormList[i]
-                  .content.isTrue=="正常",
-              'inspectionInfo': inspectionTaskFormList[i]
-                .content.inspectionInfo,
-              'information': inspectionTaskFormList[i]
-                .content.information,
-            };
-            contentList.add(map);
-          }
-          record = json.encode(contentList);
+   try{
+     EasyLoading.show(status: "文件上传中");
+     List<String> files =  await InspectionAPI.updateFiles(assets: assets,);
+     EasyLoading.dismiss();
+     if(files.isEmpty){
+       print("文件上传失败");
+     }else{
+       var photo = [];
+       var video = [];
+       for (var element in files) {
+         if(element.toLowerCase().endsWith("jpg")||element.toLowerCase().endsWith("png")){
+           photo.add(element);
+         }else{
+           video.add(element);
+         }
+       }
+       EasyLoading.show(status: "数据上传中");
+       InspectionTask item = Get.arguments;
+       var record = "";
+       if (inspectionTaskFormList.isNotEmpty) {
+         var allValid = true;
+         inspectionTaskFormList.forEach((element) {
+           allValid = allValid && element.isValid();
+         });
+         if (allValid) {
+           List<Map<String, dynamic>> contentList = [];
+           for (int i = 0; i < inspectionTaskFormList.length; i++) {
+             var map = {
+               'isTrue': inspectionTaskFormList[i]
+                   .content.isTrue=="正常",
+               'inspectionInfo': inspectionTaskFormList[i]
+                   .content.inspectionInfo,
+               'information': inspectionTaskFormList[i]
+                   .content.information,
+             };
+             contentList.add(map);
+           }
+           record = json.encode(contentList);
 
-        } else {}
-      } else {}
-      var params = {
-        "date": DateTime.now().toString(),
-        "equipmentId": item.equipmentId,
-        "photo": photo.join(","),
-        "record": record,
-        "recordName": item.equipmentName+DateTime.now().toString(),
-        "staffId": UserStore.to.staffId,
-        "taskId": item.taskId,
-        "video": video.join(",")
-      };
+         } else {}
+       } else {}
+       var params = {
+         "date": DateFormat("yyyy-MM-dd HH:mm:ss").format(DateTime.now()),
+         "equipmentId": item.equipmentId,
+         "photo": photo.join(","),
+         "record": record,
+         "recordName": item.equipmentName+DateTime.now().toString(),
+         "staffId": UserStore.to.staffId,
+         "taskId": item.taskId,
+         "video": video.join(",")
+       };
 
-      var res =  await InspectionAPI.addRecord(params: params);
-      EasyLoading.dismiss();
-      if(res.code==200){
-        EasyLoading.showSuccess("上传成功");
-        Get.back();
-      }else{
+       var res =  await InspectionAPI.addRecord(params: params);
+       EasyLoading.dismiss();
+       if(res.code==200){
+         EasyLoading.showSuccess("上传成功");
+         Get.back();
+       }else{
 
-      }
-    }
+       }
+     }
+   }catch(e){
+     print(e);
+   }
   }
 
 
