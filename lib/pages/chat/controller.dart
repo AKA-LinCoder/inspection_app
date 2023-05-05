@@ -157,13 +157,13 @@ class ChatController extends GetxController {
         TeacherChooseModel('爸爸', false, ''),
       ]),
       TeacherChooseList("C", [
-        TeacherChooseModel('曹映', false, ''),
+        TeacherChooseModel('曹操', false, ''),
         TeacherChooseModel('陈力平', false, ''),
         TeacherChooseModel('陈毅', false, ''),
       ]),
       TeacherChooseList("D", [
-        TeacherChooseModel('邓丹文', false, ''),
-        TeacherChooseModel('杜晶', false, ''),
+        TeacherChooseModel('邓小平', false, ''),
+        TeacherChooseModel('杜鹏', false, ''),
       ]),
       TeacherChooseList("E", [
         TeacherChooseModel('易中天', false, ''),
@@ -172,14 +172,14 @@ class ChatController extends GetxController {
         TeacherChooseModel('FBI', false, ''),
       ]),
       TeacherChooseList("L", [
-        TeacherChooseModel('刘柯妤', false, ''),
+        TeacherChooseModel('刘类', false, ''),
       ]),
       TeacherChooseList("Y", [
         TeacherChooseModel('杨建新', false, ''),
-        TeacherChooseModel('杨丹', false, ''),
+        TeacherChooseModel('杨博茨', false, ''),
       ]),
       TeacherChooseList("Z", [
-        TeacherChooseModel('赵今麦', false, ''),
+        TeacherChooseModel('赵双', false, ''),
         TeacherChooseModel('张中海', false, ''),
       ]),
     ]);

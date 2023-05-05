@@ -2,6 +2,7 @@ import 'package:echo_utils/echo_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:inspection_app/common/themes/texts.dart';
 import 'package:inspection_app/common/widgets/echo_asset_picker.dart';
 import 'package:inspection_app/pages/home/index.dart';
 import 'package:inspection_app/pages/inspection_detail/widget/form.dart';
@@ -27,30 +28,25 @@ class InspectionDetailPage extends GetView<InspectionDetailController> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text("巡检详情"),
+        title:  Text("巡检详情",style: Styles.headLineStyle3.copyWith(fontSize: 22.sp,color: Colors.white),),
       ),
       body: SingleChildScrollView(
         child: Column(
           children: [
             Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text("设备名称"),
-                SizedBox(
-                  width: 5.w,
-                ),
-                Text(controller.item.equipmentName),
+                Text("设备名称",style: Styles.headLineStyle4.copyWith(color: Colors.grey,fontSize: 16.sp),),
+
+                Text(controller.item.equipmentName,style: Styles.headLineStyle4.copyWith(color: Colors.black,fontSize: 16.sp),),
               ],
             ),
-            SizedBox(
-              height: 10.h,
-            ),
+            SizedBox(height: 15.h,),
             Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text("设备地址"),
-                SizedBox(
-                  width: 5.w,
-                ),
-                Text(controller.item.address),
+                Text("设备地址",style: Styles.headLineStyle4.copyWith(color: Colors.grey,fontSize: 16.sp),),
+                Text(controller.item.address,style: Styles.headLineStyle4.copyWith(color: Colors.black,fontSize: 16.sp),),
               ],
             ),
             Row(

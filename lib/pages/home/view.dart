@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:inspection_app/common/themes/colors.dart';
 import 'package:inspection_app/common/widgets/app.dart';
 import 'package:inspection_app/pages/home/widget/finished_tast_list.dart';
 import 'package:inspection_app/pages/home/widget/un_finished_task_list.dart';
@@ -38,8 +39,8 @@ class HomePage extends GetView<HomeController> {
                           // 标签指示器的颜色
                           indicatorColor: Colors.transparent,
                           // 标签的颜色
-                          labelColor: Colors.black,
-                          labelStyle: TextStyle(fontWeight: FontWeight.bold,fontSize: 21.sp),
+                          labelColor: AppColors.primary,
+                          labelStyle: TextStyle(fontWeight: FontWeight.bold,fontSize: 21.sp,color: AppColors.primary),
                           // 未选中标签的颜色
                           unselectedLabelColor: Colors.grey,
                           unselectedLabelStyle: TextStyle(fontSize: 15.sp),
