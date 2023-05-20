@@ -18,4 +18,6 @@ class HomeState {
 
   RxList<InspectionTask> finishedTaskList = <InspectionTask>[].obs;
 
+  RxList<Equipment> equipmentList = <Equipment>[].obs;
+
 }

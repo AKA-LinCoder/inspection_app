@@ -1,3 +1,4 @@
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:inspection_app/common/api/inspection.dart';
 import 'package:inspection_app/common/entities/inspection.dart';
@@ -110,6 +111,21 @@ class HomeController extends GetxController with StateMixin{
 
     }
 
+  }
+
+
+  //获取设备列表
+  getEquipmentList()async{
+    var result = await InspectionAPI.equipmentSelectAll(
+    );
+    if(result.runtimeType == String){
+      var error = result as String;
+      EasyLoading.showError(error);
+    }else{
+      List<dynamic> m = result.data;
+      var res = m.map((e) => Equipment.fromJson(e)).toList();
+      states.equipmentList.addAll(res);
+    }
   }
 
 

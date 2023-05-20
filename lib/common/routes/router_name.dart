@@ -19,6 +19,7 @@ class AppRoutes {
   static const InspectionDetail = '/InspectionDetail';
   //修改密码页面
   static const PASS = "/PASS";
+  static const DeviceListView = "/DeviceListView";
 
 
 

@@ -53,8 +53,9 @@ class _UnFinishedTaskListState extends State<UnFinishedTaskList>
                     String formattedDate = '${dateTime.year}-${dateTime.month}-${dateTime.day} ${dateTime.hour}:${dateTime.minute}:${dateTime.second}';
 
                     return GestureDetector(
-                      onTap: (){
-                        Get.toNamed(AppRoutes.InspectionDetail,arguments: item);
+                      onTap: ()async{
+                        await controller.getEquipmentList();
+                        Get.toNamed(AppRoutes.DeviceListView,arguments: item);
                       },
                       child: Container(
                         // margin: ,

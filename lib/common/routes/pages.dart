@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:inspection_app/pages/chat/index.dart';
 import 'package:inspection_app/pages/chat/widgets/chat_detail_view.dart';
+import 'package:inspection_app/pages/home/widget/device_list.dart';
 
 import '../../pages/application/index.dart';
 import '../../pages/inspection_detail/index.dart';
@@ -76,7 +77,11 @@ class AppPages {
       page: () =>  const InspectionDetailPage(),
       binding: InspectionDetailBinding(),
     ),
-
+    GetPage(
+      name: AppRoutes.DeviceListView,
+      page: () =>  const DeviceListView(),
+      binding: InspectionDetailBinding(),
+    ),
 
   ];
 

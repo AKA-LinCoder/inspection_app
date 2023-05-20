@@ -49,6 +49,21 @@ class InspectionAPI {
 
   }
 
+
+  //
+  // @description 查找所有的设备
+  // @author LinGy
+  // @date 2023/5/20 123:55
+  //
+  static Future<LinResponse> equipmentSelectAll() async {
+
+    LinResponse response = await HttpUtil().get(
+      'equipment/selectAll',
+    );
+    return response;
+
+  }
+
   //
   // @description 添加一条记录
   // @author LinGy

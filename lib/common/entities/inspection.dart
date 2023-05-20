@@ -87,3 +87,27 @@ class Content {
     "isTrue": isTrue,
   };
 }
+
+class Equipment {
+  Equipment({
+    required this.equipmentId,
+    required this.equipmentName,
+    required this.type,
+  });
+
+  int equipmentId;
+  String equipmentName;
+  String type;
+
+  factory Equipment.fromJson(Map<String, dynamic> json) => Equipment(
+    equipmentId: json["equipmentId"],
+    equipmentName: json["equipmentName"],
+    type: json["type"],
+  );
+
+  Map<String, dynamic> toJson() => {
+    "equipmentId": equipmentId,
+    "equipmentName": equipmentName,
+    "type": type,
+  };
+}
