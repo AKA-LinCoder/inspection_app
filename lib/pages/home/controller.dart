@@ -152,7 +152,7 @@ class HomeController extends GetxController with StateMixin{
         if(res!.isEmpty){
 
           if (isRefresh == true) {
-            Toast.show('暂无待完成任务');
+            Toast.show('暂无已完成任务');
             change(null,status: RxStatus.empty());
           } else {
             Toast.show('没有更多了');
